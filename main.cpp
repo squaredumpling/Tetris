@@ -10,15 +10,13 @@ struct Player
     int level;
     int score;
     int cleared_lines;
-    int lines;
+    bool falling;
     int b[20][10];
     int x, y;
     int piece[4][4];
+
+    int drop_count;
 };
-
-Player p1, p2;
-
-//int level=1, score=0, cleared_lines=0;
 
 int pieces[7][4][4] = {{{0, 0, 0, 0},
                        {0, 1, 1, 0},
@@ -58,7 +56,7 @@ int pieces[7][4][4] = {{{0, 0, 0, 0},
 void print_board (Player p, int offset) {
     for (int i=0; i<20; i++)
     {
-        move(i+1, 20+offset);
+        move(i+1, 13+offset);
         addch('|');
         for (int j=0; j<10; j++) {
             if ( i >= p.y && i < p.y+4 &&
@@ -83,7 +81,7 @@ void print_board (Player p, int offset) {
         }
         addch('|');
     }
-    move(21, 20+offset);
+    move(21, 13+offset);
     for (int i=0; i<22; i++)
         addch('-');
     move(22,0+offset);
@@ -91,11 +89,12 @@ void print_board (Player p, int offset) {
     mvprintw(1,0+offset, "Score: %d", p.score);
     mvprintw(2,0+offset, "Level: %d", p.level);
 
+    move(0,0);
+
     refresh();
 }
 
-void freeze_piece (Player p)
-{
+void freeze_piece (Player &p) {
     for (int i=0; i<4; i++)
     {
         for (int j=0; j<4; j++)
@@ -106,8 +105,7 @@ void freeze_piece (Player p)
     }
 }
 
-bool piece_fits (int x, int y, int pc[4][4], int b[20][10])
-{
+bool piece_fits (int x, int y, int pc[4][4], int b[20][10]) {
     bool yes = true;
     for (int i=0; i<4; i++)
     {
@@ -122,8 +120,7 @@ bool piece_fits (int x, int y, int pc[4][4], int b[20][10])
     return yes;
 }
 
-void copy_piece (int from[4][4], int to[4][4])
-{
+void copy_piece (int from[4][4], int to[4][4]) {
     for (int i=0; i<4; i++)
     {
         for (int j=0; j<4; j++){
@@ -132,8 +129,7 @@ void copy_piece (int from[4][4], int to[4][4])
     }
 }
 
-void rotate_piece (int from[4][4], int to[4][4])
-{
+void rotate_piece (int from[4][4], int to[4][4]) {
        for (int i=0; i<4; i++)
     {
         for (int j=0; j<4; j++)
@@ -143,8 +139,7 @@ void rotate_piece (int from[4][4], int to[4][4])
     }
 }
 
-int compute_score (int level, int lines)
-{
+int compute_score (int level, int lines) {
     int scores[] = {0, 100, 400, 900, 2000};
     int lev=level;
 
@@ -154,17 +149,78 @@ int compute_score (int level, int lines)
     return (lev/2 + 1) * scores[lines];
 }
 
+int clear_lines(Player &p) {
+    int lines=0;
+    for (int i=0 ; i<20; i++)
+    {
+        // check if a row is full
+        bool full=true;
+        for (int xx = 0 ; xx < 10 && full ; xx++)
+        {
+            if ( p.b[i][xx] == 0 )
+                full=false;
+        }
+
+        //clear line
+        if ( full )
+        {
+            for (int yy=i ; yy > 0 ; yy--)
+            {
+                for (int xx=0 ; xx < 10 ; xx++)
+                {
+                    p.b[yy][xx] = p.b[yy-1][xx];
+                }
+            }
+            lines++;
+        }
+    }
+    return lines;
+}
+
+void random_piece(Player &p) {
+    int q = rand() % 7;
+    copy_piece(pieces[q], p.piece);
+    p.x = 5;
+    p.y = 0;
+    p.falling = false;
+}
+
+void next_piece(Player &p) {
+    // freeze piece in last position on the board
+    freeze_piece(p);
+
+    // clear lines
+    int lines = clear_lines(p);
+    p.cleared_lines += lines;
+
+    p.score += compute_score(p.level, lines);
+    if (p.cleared_lines >= 5)
+    {
+        p.level++;
+        p.cleared_lines = 0;
+    }
+
+    random_piece(p);
+}
+
+int drop_speed(Player p) {
+    if (p.falling) return 1;
+    else return 1000.0/sqrt(p.level+1);
+}
+
+#define PLAYERS 3
+Player p[PLAYERS];
 
 int main() {
 
-    //int b[20][10];
-
     srand(time(NULL));
+    rand();
 
     // empty board
     for (int i=0; i<20; i++){
         for (int j=0; j<10; j++)
-            p1.b[i][j]=p2.b[i][j]=0;
+            for (int k=0; k<PLAYERS; k++)
+                p[k].b[i][j]=0;
     }
 
     initscr();
@@ -177,86 +233,54 @@ int main() {
     for (int i=0; i<7; i++)
         init_pair(i+1, i+1, i+1);
 
+    // pick random piece and column
+    for (int k=0; k<PLAYERS; k++)
+        random_piece(p[k]);
+
     // main game loop
-    for (int k=0; k<150; k++)
+    while (true)
     {
-        // pick random piece and column
-        //int piece[4][4];
-        int q = rand() % 7;
-        copy_piece(pieces[q], p1.piece);
-        p1.x = 5;
-
-        // fall piece loop
-        //int y = 0;
-        bool falling = false;
-        while (piece_fits(p1.x, p1.y, p1.piece, p1.b))
+        int c = getch();
+        switch (c)
         {
-            for (int j=0; j<50; j++){
-                int c = getch();
-                switch (c)
-                {
-                    case KEY_UP:
-                    case 'w':       int rot[4][4]; rotate_piece(p1.piece, rot);
-                                    if (piece_fits(p1.x, p1.y, rot, p1.b)) copy_piece(rot, p1.piece); break;
+            case 'w':       {int rot[4][4]; rotate_piece(p[0].piece, rot);
+                            if (piece_fits(p[0].x, p[0].y, rot, p[0].b)) copy_piece(rot, p[0].piece); break;}
 
-                    case KEY_RIGHT:
-                    case 'd':       if (piece_fits(p1.x+1, p1.y, p1.piece, p1.b)) p1.x++; break;
+            case KEY_UP:    {int rot[4][4]; rotate_piece(p[1].piece, rot);
+                            if (piece_fits(p[1].x, p[1].y, rot, p[1].b)) copy_piece(rot, p[1].piece); break;}
 
-                    case KEY_LEFT:
-                    case 'a':       if (piece_fits(p1.x-1, p1.y, p1.piece, p1.b)) p1.x--; break;
+            case KEY_RIGHT: if (piece_fits(p[1].x+1, p[1].y, p[1].piece, p[1].b)) p[1].x++; break;
+            case 'd':       if (piece_fits(p[0].x+1, p[0].y, p[0].piece, p[0].b)) p[0].x++; break;
 
-                    case KEY_DOWN:
-                    case 's':
-                    case ' ':       falling = true; break;
-                }
-                print_board(p1, 0);
-                if (!falling)
-                    usleep(10000.0/sqrt(p1.level+1));
-            }
-            p1.y++;
+            case KEY_LEFT:  if (piece_fits(p[1].x-1, p[1].y, p[1].piece, p[1].b)) p[1].x--; break;
+            case 'a':       if (piece_fits(p[0].x-1, p[0].y, p[0].piece, p[0].b)) p[0].x--; break;
+
+            case KEY_DOWN:  p[1].falling = true; break;
+            case 's':
+            case ' ':       p[0].falling = true; break;
         }
 
-        // game over when new piece can not fit
-        if (p1.y==0)
-            return -1;
+        for (int k=0; k<PLAYERS; k++)
+            print_board(p[k], 40 * k);
 
-        // freeze piece in last position on the board
-        freeze_piece(p1);
-
-        p1.lines=0;
-
-        for (int i=0 ; i<4 && p1.y+i<21; i++)
+        for (int k=0; k<PLAYERS; k++)
         {
-            // check if a row is full
-            bool full=true;
-            for (int xx = 0 ; xx < 10 && full ; xx++)
-            {
-                if ( p1.b[p1.y-1+i][xx] == 0 )
-                    full=false;
+            if (!piece_fits(p[k].x, p[k].y+1, p[k].piece, p[k].b)) {
+                // game over when new piece can not fit
+                if (p[k].y == 0) return -1;
+
+                next_piece(p[k]);
             }
 
-            //clear line
-            if ( full )
-            {
-                for (int yy=p1.y-1+i ; yy > 0 ; yy--)
-                {
-                    for (int xx=0 ; xx < 10 ; xx++)
-                    {
-                        p1.b[yy][xx] = p1.b[yy-1][xx];
-                    }
-                }
-                p1.lines++;
+            p[k].drop_count++;
+            if (p[k].drop_count >= drop_speed(p[k])) {
+                p[k].y++;
+                p[k].drop_count = 0;
             }
         }
-        p1.cleared_lines += p1.lines;
-        if (p1.cleared_lines >= 5)
-        {
-            p1.level++;
-            p1.cleared_lines = 0;
-        }
-        p1.score += compute_score(p1.level, p1.lines);
+
+        usleep(500);
     }
 
     endwin();
-
 }
