@@ -7,7 +7,7 @@ using namespace std;
 
 struct Player
 {
-    int level;
+    int level=1;
     int score;
     int cleared_lines;
     bool falling;
@@ -208,7 +208,7 @@ int drop_speed(Player p) {
     else return 1000.0/sqrt(p.level+1);
 }
 
-#define PLAYERS 3
+#define PLAYERS 2
 Player p[PLAYERS];
 
 int main() {
