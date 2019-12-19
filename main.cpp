@@ -1,5 +1,6 @@
 #include <iostream>
-#include <ncurses.h>
+//#include <ncurses.h>
+#include <SDL.h>
 #include <unistd.h>
 #include <math.h>
 
@@ -17,6 +18,9 @@ struct Player
 
     int drop_count;
 };
+
+const int SCREEN_WIDTH=640;
+const int SCREEN_HEIGHT=480;
 
 int pieces[7][4][4] = {{{0, 0, 0, 0},
                        {0, 1, 1, 0},
@@ -53,45 +57,58 @@ int pieces[7][4][4] = {{{0, 0, 0, 0},
                        {0, 0, 7, 0},
                        {0, 0, 0, 0}}};
 
+int colors[7][3]={{0xAA, 0xAA, 0xAA},
+                  {0xAA, 0xAA, 0xAA},
+                  {0xAA, 0xAA, 0xAA},
+                  {0xAA, 0xAA, 0xAA},
+                  {0xAA, 0xAA, 0xAA},
+                  {0xAA, 0xAA, 0xAA},
+                  {0xAA, 0xAA, 0xAA}};
+
+const int w=15;
+SDL_Window* window = NULL;
+SDL_Renderer* renderer = NULL;
+SDL_Surface* screenSurface = NULL;
+
 void print_board (Player p, int offset) {
+
+    SDL_SetRenderDrawColor(renderer, 255, 255, 255, SDL_ALPHA_OPAQUE);
+    SDL_RenderDrawLine(renderer, 13*w+offset*w, 0, 13*w+offset*w, 20*w);
+    SDL_RenderDrawLine(renderer, 13*w+offset*w, 20*w, 23*w+offset*w, 20*w);
+    SDL_RenderDrawLine(renderer, 23*w+offset*w, 20*w, 23*w+offset*w, 0);
+
     for (int i=0; i<20; i++)
     {
-        move(i+1, 13+offset);
-        addch('|');
         for (int j=0; j<10; j++) {
             if ( i >= p.y && i < p.y+4 &&
                  j >= p.x && j < p.x+4 &&
                  p.piece[i-p.y][j-p.x] != 0)
-                {
-                    // current piece
-                    attron(COLOR_PAIR(p.piece[i-p.y][j-p.x]));
-                    printw("  ");
-                    attroff(COLOR_PAIR(p.piece[i-p.y][j-p.x]));
-                }
+            {
+                // current piece
+                int c = p.piece[i-p.y][j-p.x];
+                SDL_SetRenderDrawColor(renderer, colors[c][0], colors[c][1], colors[c][2], SDL_ALPHA_OPAQUE);
+                SDL_Rect r = {(13+j)*w+offset*w, i*w, w, w};
+                SDL_RenderFillRect(renderer, &r);
+            }
             else if (p.b[i][j]==0)
+            {
                 // blank space
-                printw("  ");
-            else {
-                // stationary block
-                attron(COLOR_PAIR(p.b[i][j]));
-                printw("  ");
-                attroff(COLOR_PAIR(p.b[i][j]));
+                SDL_SetRenderDrawColor(renderer, 0, 0, 0, SDL_ALPHA_OPAQUE);
+                SDL_Rect r = {(13+j)*w+offset*w, i*w, w, w};
+                SDL_RenderFillRect(renderer, &r);
             }
 
+            else {
+                // stationary block
+                int c = p.b[i][j];
+                SDL_SetRenderDrawColor(renderer, colors[c][0], colors[c][1], colors[c][2], SDL_ALPHA_OPAQUE);
+                SDL_Rect r = {(13+j)*w+offset*w, i*w, w, w};
+                SDL_RenderFillRect(renderer, &r);
+            }
         }
-        addch('|');
     }
-    move(21, 13+offset);
-    for (int i=0; i<22; i++)
-        addch('-');
-    move(22,0+offset);
 
-    mvprintw(1,0+offset, "Score: %d", p.score);
-    mvprintw(2,0+offset, "Level: %d", p.level);
-
-    move(0,0);
-
-    refresh();
+    SDL_RenderPresent(renderer);
 }
 
 void freeze_piece (Player &p) {
@@ -205,13 +222,14 @@ void next_piece(Player &p) {
 
 int drop_speed(Player p) {
     if (p.falling) return 1;
-    else return 1000.0/sqrt(p.level+1);
+    else return 30.0/sqrt(p.level+1);
 }
+
 
 #define PLAYERS 2
 Player p[PLAYERS];
 
-int main() {
+int main( int argc, char* args[] ) {
 
     srand(time(NULL));
     rand();
@@ -223,15 +241,16 @@ int main() {
                 p[k].b[i][j]=0;
     }
 
-    initscr();
-    clear();
-    noecho();
-    cbreak();
-    keypad(stdscr, true);
-    timeout(0);
-    start_color();
-    for (int i=0; i<7; i++)
-        init_pair(i+1, i+1, i+1);
+    if( SDL_Init( SDL_INIT_VIDEO ) < 0 ) {
+        printf("SDL could not initialize! SDL_Error: %s\n", SDL_GetError());
+        return -1;
+    }
+
+    if( SDL_CreateWindowAndRenderer(SCREEN_WIDTH, SCREEN_HEIGHT, SDL_WINDOW_RESIZABLE, &window, &renderer ))
+    {
+        printf( "Window could not be created! SDL_Error: %s\n", SDL_GetError() );
+        return -1;
+    }
 
     // pick random piece and column
     for (int k=0; k<PLAYERS; k++)
@@ -240,7 +259,14 @@ int main() {
     // main game loop
     while (true)
     {
-        int c = getch();
+        SDL_Event event;
+        if (SDL_PollEvent(&event)) {
+            if (event.type == SDL_QUIT) {
+                break;
+            }
+        }
+
+/*        int c = getch();
         switch (c)
         {
             case 'w':       {int rot[4][4]; rotate_piece(p[0].piece, rot);
@@ -258,16 +284,19 @@ int main() {
             case KEY_DOWN:  p[1].falling = true; break;
             case 's':
             case ' ':       p[0].falling = true; break;
-        }
+        }*/
+
+//        SDL_SetRenderDrawColor(renderer, 0, 0, 0, SDL_ALPHA_OPAQUE);
+//        SDL_RenderClear(renderer);
 
         for (int k=0; k<PLAYERS; k++)
-            print_board(p[k], 40 * k);
+            print_board(p[k], 30 * k);
 
         for (int k=0; k<PLAYERS; k++)
         {
             if (!piece_fits(p[k].x, p[k].y+1, p[k].piece, p[k].b)) {
                 // game over when new piece can not fit
-                if (p[k].y == 0) return -1;
+                if (p[k].y == 0) return -2;
 
                 next_piece(p[k]);
             }
@@ -279,8 +308,11 @@ int main() {
             }
         }
 
-        usleep(500);
+        SDL_Delay(16);
     }
 
-    endwin();
+    SDL_DestroyWindow( window );
+
+    SDL_Quit();
+
 }
