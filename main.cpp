@@ -9,8 +9,11 @@ using namespace std;
 
 #define MAX_PLAYERS 10
 
+enum PlayerType {P1, P2, AI};
+
 struct Player
 {
+    PlayerType type;
     int level=1;
     int score=0;
     int cleared_lines=0;
@@ -26,17 +29,17 @@ struct Player
 
 const int SCREEN_WIDTH=1160;
 const int SCREEN_HEIGHT=640;
-const int PLAYERS=2;
+const int PLAYERS=3;
 
 
 
-int colors[7][3]={{0x00, 0xAA, 0xAA},
-                  {0xAA, 0xAA, 0xAA},
-                  {0xAA, 0x00, 0xAA},
-                  {0xAA, 0x34, 0x78},
-                  {0xAA, 0xAA, 0x44},
-                  {0x55, 0xAA, 0xAA},
-                  {0xAA, 0x99, 0xAA}};
+int colors[7][3]={{255,   255, 255},
+                  {255, 255, 0},
+                  {255, 0, 255},
+                  {0, 255, 255},
+                  {255, 255, 0},
+                  {0, 255, 255},
+                  {255, 0, 255}};
 
 const int w=20;
 SDL_Window* window = NULL;
@@ -219,7 +222,33 @@ void next_piece (Player &p) {
 
 int drop_speed (Player p) {
     if (p.falling) return 1;
-    else return 30.0/sqrt(p.level+1);
+    else return 40.0/sqrt(p.level+1);
+}
+
+void p_rotate(Player &p) {
+    int rot[4][4];
+    rotate_piece(p.piece, rot);
+    if (piece_fits(p.x, p.y, rot, p.b))
+        copy_piece(rot, p.piece);
+}
+
+void p_right(Player &p) {
+    if (piece_fits(p.x+1, p.y, p.piece, p.b)) p.x++;
+}
+
+void p_left(Player &p) {
+    if (piece_fits(p.x-1, p.y, p.piece, p.b)) p.x--;
+}
+
+void p_fall(Player &p) {
+    p.falling = true;
+}
+
+void init_player(Player &p) {
+    for (int i=0; i<20; i++){
+        for (int j=0; j<10; j++)
+            p.b[i][j]=0;
+    }
 }
 
 int main( int argc, char* args[] ) {
@@ -227,12 +256,9 @@ int main( int argc, char* args[] ) {
     srand(time(NULL));
     rand();
 
-    // empty board
-    for (int i=0; i<20; i++){
-        for (int j=0; j<10; j++)
-            for (int k=0; k<PLAYERS; k++)
-                p[k].b[i][j]=0;
-    }
+    // empty boards
+    for (int k=0; k<PLAYERS; k++)
+        init_player(p[k]);
 
     if( SDL_Init( SDL_INIT_VIDEO ) < 0 ) {
         printf("SDL could not initialize! SDL_Error: %s\n", SDL_GetError());
@@ -248,6 +274,14 @@ int main( int argc, char* args[] ) {
     window = SDL_CreateWindow("", 0, 0, SCREEN_WIDTH, SCREEN_HEIGHT, SDL_WINDOW_RESIZABLE);
     renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC);
 
+    Player *p0 = &p[0];
+    p[0].type = P1;
+
+    p[1].type = AI;
+
+    Player *p1 = &p[2];
+    p[2].type = P2;
+
     // pick random piece and column
     for (int k=0; k<PLAYERS; k++)
         random_piece(p[k]);
@@ -255,6 +289,7 @@ int main( int argc, char* args[] ) {
     // main game loop
     while (true)
     {
+        // read human input
         SDL_Event event;
         if (SDL_PollEvent(&event)) {
 
@@ -262,39 +297,23 @@ int main( int argc, char* args[] ) {
 
                 switch (event.key.keysym.sym)
                 {
-                    case SDLK_w: {
-                        int rot[4][4];
-                        rotate_piece(p[0].piece, rot);
-                        if (piece_fits(p[0].x, p[0].y, rot, p[0].b))
-                            copy_piece(rot, p[0].piece);
-                        break;
-                    }
+                    case SDLK_UP:    p_rotate(*p1); break;
+                    case SDLK_w:     p_rotate(*p0); break;
 
-                    case SDLK_UP: {
-                        int rot[4][4];
-                        rotate_piece(p[1].piece, rot);
-                        if (piece_fits(p[1].x, p[1].y, rot, p[1].b))
-                            copy_piece(rot, p[1].piece);
-                        break;
-                    }
+                    case SDLK_RIGHT: p_right(*p1); break;
+                    case SDLK_d:     p_right(*p0); break;
 
-                    case SDLK_RIGHT: if (piece_fits(p[1].x+1, p[1].y, p[1].piece, p[1].b)) p[1].x++; break;
-                    case SDLK_d:       if (piece_fits(p[0].x+1, p[0].y, p[0].piece, p[0].b)) p[0].x++; break;
+                    case SDLK_LEFT:  p_left(*p1); break;
+                    case SDLK_a:     p_left(*p0); break;
 
-                    case SDLK_LEFT:  if (piece_fits(p[1].x-1, p[1].y, p[1].piece, p[1].b)) p[1].x--; break;
-                    case SDLK_a:       if (piece_fits(p[0].x-1, p[0].y, p[0].piece, p[0].b)) p[0].x--; break;
-
-                    case SDLK_DOWN:  p[1].falling = true; break;
+                    case SDLK_DOWN:  p_fall(*p1); break;
                     case SDLK_s:
-                    case SDLK_SPACE:       p[0].falling = true; break;
+                    case SDLK_SPACE: p_fall(*p0); break;
                 }
             }
 
-            else if (event.type == SDL_QUIT) {
-                break;
-            }
+            else if (event.type == SDL_QUIT) break;
         }
-
 
 
         SDL_SetRenderDrawColor(renderer, 0, 0, 0, SDL_ALPHA_OPAQUE);
@@ -308,12 +327,11 @@ int main( int argc, char* args[] ) {
         for (int k=0; k<PLAYERS; k++)
         {
             if (!piece_fits(p[k].x, p[k].y+1, p[k].piece, p[k].b)) {
-                // game over when new piece can not fit
+                // game over when new piece can't fit
                 if (p[k].y == 0) {
-                    
+                    init_player(p[k]);
                 }
-
-                next_piece(p[k]);
+                else next_piece(p[k]);
             }
 
             p[k].drop_count++;
