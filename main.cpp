@@ -3,7 +3,7 @@
 #include <SDL_ttf.h>
 #include <unistd.h>
 #include <math.h>
-#include "piece_shapes.h"
+#include "piece_characteristics.h"
 
 using namespace std;
 
@@ -18,14 +18,14 @@ struct Player
 {
     PlayerType type;
     bool dead = false;
-    int level=60;
+    int level=0;
     int score=0;
     int cleared_lines=0;
     bool falling=false;
     Board b;
     int x, y;
     Piece piece;
-    Piece next[2];
+    Piece next[3];
     int drop_count=0;
     int lastTime=0;
 } p[MAX_PLAYERS];
@@ -36,6 +36,7 @@ struct Player
 const int SCREEN_WIDTH=1160;
 const int SCREEN_HEIGHT=640;
 const int PLAYERS=3;
+const int DIFFICULTY=2;
 
 
 
@@ -48,15 +49,17 @@ int colors[][3]={{0, 0, 0},
                  {0, 255, 0},
                  {255, 0, 0}};
 
-const int w=20;
+
+const int w = 20;
 SDL_Window* window = NULL;
 SDL_Renderer* renderer = NULL;
 TTF_Font* Sans = NULL;
+TTF_Font* Small = NULL;
 
-void draw_text(char text[], int x, int y, TTF_Font* font) {
+void draw_text(const char text[], int x, int y, TTF_Font* font, unsigned char r, unsigned char g, unsigned char b) {
 
-    SDL_Color White = {255, 255, 255};
-    SDL_Surface* surfaceMessage = TTF_RenderText_Blended(font, text, White);
+    SDL_Color color_t = {r, g, b};
+    SDL_Surface* surfaceMessage = TTF_RenderText_Blended(font, text, color_t);
 
     SDL_Texture* Message = SDL_CreateTextureFromSurface(renderer, surfaceMessage);
 
@@ -74,6 +77,8 @@ void draw_text(char text[], int x, int y, TTF_Font* font) {
 
 void print_board (Player p, int xoffset, int yoffset) {
 
+    char txt[10]; // text holder
+
     SDL_SetRenderDrawColor (renderer, 255, 255, 255, SDL_ALPHA_OPAQUE);
     // big border vertical
     SDL_RenderDrawLine(renderer, xoffset*w-1, yoffset*w-1, xoffset*w-1, (22+yoffset)*w);
@@ -86,24 +91,40 @@ void print_board (Player p, int xoffset, int yoffset) {
     //small square 1
     SDL_Rect s1 = {xoffset*w-1+w/2, (yoffset+2)*w-1+w/2, w*3+2, w*3+2+w/2};
     SDL_RenderDrawRect(renderer, &s1);
-    SDL_RenderDrawLine(renderer, xoffset*w-1, yoffset*w-1, (xoffset+14)*w-1, yoffset*w-1);
+    SDL_RenderDrawLine(renderer, xoffset*w-1+w/2, (yoffset+3)*w-1+w/2, (xoffset+3)*w-1+w/2, (yoffset+3)*w-1+w/2);
     // small square 2
     SDL_Rect s2 = {xoffset*w-1+w/2, (yoffset+7)*w-1, w*3+2, w*3+2+w/2};
     SDL_RenderDrawRect(renderer, &s2);
-    SDL_RenderDrawLine(renderer, xoffset*w-1, (yoffset+2)*w-1, (xoffset+14)*w-1, (yoffset+2)*w-1);
+    SDL_RenderDrawLine(renderer, xoffset*w-1+w/2, (yoffset+8)*w-1, (xoffset+3)*w-1+w/2, (yoffset+8)*w-1);
     // next piece rectangle
-    SDL_Rect n = {xoffset*w-1+w/2, (yoffset+11)*w-1+w/2, w*3+2, w*9+2+w/2};
+    SDL_Rect n = {xoffset*w-1+w/2, (yoffset+11)*w-1+w/2, w*3+2, 10*w};
     SDL_RenderDrawRect(renderer, &n);
-    SDL_RenderDrawLine(renderer, xoffset*w-1, yoffset*w-1, (xoffset+14)*w-1, yoffset*w-1);
-    SDL_RenderDrawLine(renderer, xoffset*w-1, (yoffset+2)*w-1, (xoffset+14)*w-1, (yoffset+2)*w-1);
-    SDL_RenderDrawLine(renderer, xoffset*w-1, (yoffset+22)*w, (xoffset+14)*w-1, (yoffset+22)*w);
+    SDL_RenderDrawLine(renderer, xoffset*w-1+w/2, (yoffset+12)*w + w/2, (xoffset+3)*w-1 + w/2, (yoffset+12)*w + w/2);
+    SDL_RenderDrawLine(renderer, xoffset*w-1+w/2, (yoffset+15)*w + w/2, (xoffset+3)*w-1 + w/2, (yoffset+15)*w + w/2);
+    SDL_RenderDrawLine(renderer, xoffset*w-1+w/2, (yoffset+18)*w + w/2, (xoffset+3)*w-1 + w/2, (yoffset+18)*w + w/2);
 
-    char txt[10];
-    sprintf(txt, "%9d", p.score);
-    draw_text(txt, (xoffset+6)*w, yoffset*w+3, Sans);
+    sprintf(txt, "%7d", p.score);
+    draw_text(txt, (xoffset+6)*w-10, yoffset*w+3, Sans, 255, 255, 255);
 
-    sprintf(txt, "%d", p.level);
-    draw_text(txt, (xoffset+1)*w, (yoffset+3)*w, Sans);
+    if (p.level < 8) {
+        sprintf(txt, "%d", p.level);
+        draw_text(txt, (xoffset+1)*w + w/2, (yoffset+4)*w - w/4, Sans, 255, 255, 255);
+    }
+    else {
+        draw_text("8+", (xoffset+1)*w, (yoffset+4)*w - w/4, Sans, 255, 255, 255);
+    }
+
+    int red=0, green=0, blue=0;
+    switch(p.type) {
+        case P1: sprintf(txt, "P1"); red=200; green=60; blue=200; break;
+        case P2: sprintf(txt, "P2"); red=200; green=60; blue=200; break;
+        case AI: sprintf(txt, "AI"); red=60; green=200; blue=60; break;
+    }
+
+    draw_text(txt, (xoffset+1)*w, yoffset*w, Sans, red, green, blue);
+    draw_text("LEVEL", (xoffset+1)*w, (yoffset+2)*w + w/2 + 2, Small, 255, 255, 255);
+    draw_text("ABILITY", xoffset*w + w/2 + 2, (yoffset+7)*w + 2, Small, 255, 255, 255);
+    draw_text("NEXT", xoffset*w + w + 4, (yoffset+11)*w + w/2 + 2, Small, 255, 255, 255);
 
     // draw board pieces
     for (int i=0; i<20; i++)
@@ -129,14 +150,25 @@ void print_board (Player p, int xoffset, int yoffset) {
     }
 
     // draw next pieces
-    for (int i=0; i<8; i++)
-    {
-        for (int j=0; j<4; j++)
-        {
-            SDL_Rect r = {(xoffset + 1) * w + j* (w/2), (yoffset + 12)*w + (i+1)*(w/2), w/2, w / 2};
-            int c = p.next[i/4][i%4][j];
-            SDL_SetRenderDrawColor(renderer, colors[c][0], colors[c][1], colors[c][2], SDL_ALPHA_OPAQUE);
-            SDL_RenderFillRect(renderer, &r);
+    int dx = (xoffset+1) * w;
+    int dy = (yoffset+13) * w;
+    for (int k=0; k < 3 - DIFFICULTY; k++) {
+        for (int i=0; i<4; i++) {
+            for (int j=0; j<4; j++) {
+                SDL_Rect r = { dx + j*(w/2), dy + ((k*4)+i)*(w/2) + k*w, w/2, w/2};
+                int c = p.next[k][i][j];
+                SDL_SetRenderDrawColor(renderer, colors[c][0], colors[c][1], colors[c][2], SDL_ALPHA_OPAQUE);
+                SDL_RenderFillRect(renderer, &r);
+            }
+        }
+    }
+
+    SDL_SetRenderDrawColor (renderer, 200, 0, 100, SDL_ALPHA_OPAQUE);
+    int width=12;
+    for (int k= max(3-DIFFICULTY, 0); k<3; k++) {
+        for (int i=0; i<width; i++) {
+            SDL_RenderDrawLine (renderer, dx, dy + k*3*w + i, dx + 2*w, dy + (k*3+2)*w + i - width);
+            SDL_RenderDrawLine (renderer, dx, dy + (k*3+2)*w + i - width, dx + 2*w, dy + k*3*w +i);
         }
     }
 }
@@ -254,12 +286,13 @@ void next_piece (Player &p) {
     init_crt_piece(p);
     copy_piece(p.next[0], p.piece);
     copy_piece(p.next[1], p.next[0]);
-    random_piece(p.next[1]);
+    copy_piece(p.next[2], p.next[1]);
+    random_piece(p.next[2]);
 }
 
 int drop_speed (Player p) {
     if (p.falling) return 1;
-    else return 40.0/sqrt(p.level+1);
+    else return 50.0/(p.level*p.level+4)+1;
 }
 
 void p_rotate (Player &p) {
@@ -329,28 +362,48 @@ int evaluate_board (Board b)
 
 void ai (Player &p)
 {
-    int evmax=1000, xmax=0, pc[4][4], rmax=0;
-    copy_piece(p.piece, pc);
-    for (int i=-1; i<10; i++)
-    {
+    int evmax=1000, xmax=0, rmax=0;
+    Piece pc1, pc2;
+    copy_piece(p.piece, pc1);
+    copy_piece(p.next[0], pc2);
+    for (int i=-1; i<10; i++) {
         for (int j=0; j<4; j++) {
-            if (piece_fits(i, p.y, pc, p.b)) {
+            if (piece_fits(i, p.y, pc1, p.b))
+            {
                 Board b;
                 memcpy(b, p.b, sizeof(b));
                 int y = p.y;
-                while (piece_fits(i, y+1, pc, b))
+                while (piece_fits(i, y+1, pc1, b))
                     y++;
-                freeze_piece(i, y, pc, b);
+                freeze_piece(i, y, pc1, b);
                 clear_lines(b);
 
-                int e = evaluate_board(b);
-                if (e < evmax) {
-                    evmax = e;
-                    xmax = i;
-                    rmax = j;
+                for (int k=-1; k<10; k++) {
+                    for (int l=0; l<4; l++) {
+                        if (piece_fits(k, 0, pc2, b))
+                        {
+                            Board bb;
+                            memcpy(bb, b, sizeof(b));
+                            int yy = 0;
+                            while (piece_fits(k, yy+1, pc2, bb))
+                                yy++;
+                            freeze_piece(k, yy, pc2, bb);
+                            clear_lines(bb);
+
+                            int e = evaluate_board(bb);
+                            if (e < evmax)
+                            {
+                                evmax = e;
+                                xmax = i;
+                                rmax = j;
+                            }
+                        }
+                        rotate_piece(pc2, pc2);
+                    }
                 }
             }
-            rotate_piece(pc, pc);
+
+            rotate_piece(pc1, pc1);
         }
     }
     if (rmax != 0)
@@ -380,13 +433,14 @@ int main (int argc, char* args[] ) {
         printf("TTF_Init: %s\n", TTF_GetError());
         exit(2);
     }
-    Sans = TTF_OpenFont("Andale.ttf", 30);
+    Sans = TTF_OpenFont("Andale.ttf", 36);
+    Small = TTF_OpenFont("Andale.ttf", 14);
 
     window = SDL_CreateWindow("", 0, 0, SCREEN_WIDTH, SCREEN_HEIGHT, SDL_WINDOW_RESIZABLE);
     renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC);
 
-    p[0].type = P1;
-    p[1].type = AI;
+    p[0].type = AI;
+    p[1].type = P1;
     p[2].type = AI;
 
     // pick random piece and column
@@ -394,6 +448,7 @@ int main (int argc, char* args[] ) {
         random_piece(p[k].piece);
         random_piece(p[k].next[0]);
         random_piece(p[k].next[1]);
+        random_piece(p[k].next[2]);
         init_crt_piece(p[k]);
     }
 
@@ -417,7 +472,7 @@ int main (int argc, char* args[] ) {
             {
                 case P1: if (keypressed && !p[i].dead) process_key(event, SDLK_w, SDLK_d, SDLK_a, SDLK_s, p[i]); break;
                 case P2: if (keypressed && !p[i].dead) process_key(event, SDLK_UP, SDLK_RIGHT, SDLK_LEFT, SDLK_DOWN, p[i]); break;
-                case AI: if (currentTime > p[i].lastTime + 25 && !p[i].dead) {ai(p[i]); p[i].lastTime = currentTime;} break;
+                case AI: if (currentTime > p[i].lastTime && !p[i].dead) {ai(p[i]); ai(p[i]); p[i].lastTime = currentTime;} break;
             }
         }
 
@@ -434,23 +489,23 @@ int main (int argc, char* args[] ) {
             if (!p[k].dead) {
                 if (!piece_fits(p[k].x, p[k].y+1, p[k].piece, p[k].b)) {
                     // game over when new piece can't fit
-                    if (p[k].y == 0) {
+                    if (p[k].y <= 0) {
                         //init_player(p[k]);
                         p[k].dead = true;
                     }
                     else next_piece(p[k]);
                 }
-
-                p[k].drop_count++;
-                if (p[k].drop_count >= drop_speed(p[k])) {
-                    p[k].y++;
-                    p[k].drop_count = 0;
+                else {
+                    p[k].drop_count++;
+                    if (p[k].drop_count >= drop_speed(p[k])) {
+                        p[k].y++;
+                        p[k].drop_count = 0;
+                    }
                 }
             }
-
         }
 
-        SDL_Delay(16);
+//        SDL_Delay(16);
     }
 
     SDL_DestroyWindow( window );
