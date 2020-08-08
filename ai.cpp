@@ -27,7 +27,7 @@ int evaluate_board (Board b)
     return g*g + delta + (ymax-ymin)*(ymax-ymin) + depth;
 }
 
-void ai (Player &p)
+void compute_next_piece (Player &p)
 {
     int evmax=1000, xmax=0, rmax=0;
     Piece pc1, pc2;
@@ -69,15 +69,27 @@ void ai (Player &p)
                     }
                 }
             }
-
             rotate_piece(pc1, pc1);
         }
     }
-    if (rmax != 0)
+    p.ai_rotation = rmax;
+    p.ai_position = xmax;
+}
+
+void ai_move (Player &p)
+{
+    if (p.new_piece) {
+        compute_next_piece(p);
+        p.new_piece = false;
+    }
+
+    if (p.ai_rotation != 0) {
         p_rotate(p);
-    else if (xmax < p.x)
+        p.ai_rotation--;
+    }
+    else if (p.ai_position < p.x)
         p_left(p);
-    else if (xmax > p.x)
+    else if (p.ai_position > p.x)
         p_right(p);
     else p_fall(p);
 }

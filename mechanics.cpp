@@ -92,6 +92,7 @@ void init_crt_piece (Player &p) {
     p.x = 3;
     p.y = 0;
     p.falling = false;
+    p.new_piece = true;
 }
 
 void next_piece (Player &p) {
@@ -103,7 +104,7 @@ void next_piece (Player &p) {
     p.cleared_lines += lines;
 
     p.score += compute_score(p.level, lines);
-    if (p.cleared_lines >= 5)
+    if (p.cleared_lines >= 8)
     {
         p.level++;
         p.cleared_lines = 0;
@@ -118,7 +119,7 @@ void next_piece (Player &p) {
 
 int drop_speed (Player p) {
     if (p.falling) return 1;
-    else return 50.0/(p.level*p.level+4)+1;
+    else return 200.0/(p.level*p.level+4)+1;
 }
 
 void p_rotate (Player &p) {
@@ -152,8 +153,8 @@ void init_game() {
     for (int k=0; k<PLAYERS; k++)
         init_player(p[k]);
 
-    p[0].type = AI;
-    p[1].type = P1;
+    p[0].type = P1;
+    p[1].type = AI;
     p[2].type = AI;
 
     p[0].difficulty = 0;
@@ -178,7 +179,9 @@ void next_frame(Player &p) {
                 //init_player(p[k]);
                 p.dead = true;
             }
-            else next_piece(p);
+            else {
+                next_piece(p);
+            }
         }
         else {
             p.drop_count++;

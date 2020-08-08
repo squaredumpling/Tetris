@@ -2,7 +2,6 @@
 #include <SDL.h>
 #include <SDL_ttf.h>
 #include <SDL_image.h>
-#include <unistd.h>
 #include <math.h>
 
 typedef int Piece[4][4];
@@ -25,6 +24,19 @@ struct Player
     int drop_count=0;
     int lastTime=0;
     int difficulty=0;
+
+    bool new_piece = false;
+    int ai_rotation=0;
+    int ai_position=0;
+
+    struct Textures {
+        SDL_Texture *score;
+        SDL_Texture *level;
+        SDL_Texture *next_label;
+        SDL_Texture *level_label;
+        SDL_Texture *ability_label;
+        SDL_Texture *player_type_label;
+    } txt;
 };
 
 #define MAX_PLAYERS 10
@@ -36,9 +48,7 @@ int PLAYERS=3;
 #include "ai.cpp"
 #include "graphics.cpp"
 #include "input.cpp"
-
 using namespace std;
-
 
 int main (int argc, char* args[] ) {
 
@@ -71,10 +81,20 @@ int main (int argc, char* args[] ) {
     }
 
     init_game();
+    for (int k=0; k<PLAYERS; k++)
+        init_player_textures(p[k]);
 
     // main game loop
     while (true)
     {
+        SDL_SetRenderDrawColor(renderer, 0, 0, 0, SDL_ALPHA_OPAQUE);
+        SDL_RenderClear(renderer);
+
+        for (int k=0; k<PLAYERS; k++)
+            print_board(p[k], 4 + k*18, 5);
+
+        SDL_RenderPresent(renderer);
+
         // read human input
         SDL_Event event;
         bool keypressed = false;
@@ -91,20 +111,12 @@ int main (int argc, char* args[] ) {
                 case P1: if (keypressed && !p[i].dead) process_key(event, SDLK_w, SDLK_d, SDLK_a, SDLK_s, p[i]); break;
                 case P2: if (keypressed && !p[i].dead) process_key(event, SDLK_UP, SDLK_RIGHT, SDLK_LEFT, SDLK_DOWN, p[i]); break;
                 case AI: if (currentTime > p[i].lastTime && !p[i].dead) {
-                    ai(p[i]);
+                    ai_move(p[i]);
                     p[i].lastTime = currentTime;
                 }
                 break;
             }
         }
-
-        SDL_SetRenderDrawColor(renderer, 0, 0, 0, SDL_ALPHA_OPAQUE);
-        SDL_RenderClear(renderer);
-
-        for (int k=0; k<PLAYERS; k++)
-            print_board(p[k], 4 + k*18, 5);
-
-        SDL_RenderPresent(renderer);
 
         for (int k=0; k<PLAYERS; k++)
             next_frame(p[k]);
