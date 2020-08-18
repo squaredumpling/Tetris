@@ -84,8 +84,15 @@ int clear_lines (Board b) {
 }
 
 void random_piece(Piece &pc) {
-    int q = rand() % 7;
-    copy_piece(pieces[q], pc);
+    if (rand() % 100 == 72) {
+        copy_piece(pieces[7], pc);
+        return;
+    }
+    if (rand() % 2000 == 45) {
+        copy_piece(pieces[8], pc);
+        return;
+    }
+    copy_piece(pieces[rand() % 7], pc);
 }
 
 void init_crt_piece (Player &p) {
@@ -102,6 +109,8 @@ void next_piece (Player &p) {
     // clear lines
     int lines = clear_lines(p.b);
     p.cleared_lines += lines;
+    p.level_cleared_lines += lines;
+    p.focus_cleared_lines += lines;
 
     p.score += compute_score(p.level, lines);
     if (p.cleared_lines >= 8)
@@ -141,25 +150,25 @@ void p_fall (Player &p) {
     p.falling = true;
 }
 
-void init_player (Player &p) {
+void clear_board (Player &p) {
     for (int i=0; i<20; i++){
         for (int j=0; j<10; j++)
             p.b[i][j]=0;
     }
 }
 
-void init_game() {
+void init_game_state() {
     // empty boards
     for (int k=0; k<PLAYERS; k++)
-        init_player(p[k]);
+        clear_board(p[k]);
 
-    p[0].type = P1;
+    p[0].type = AI;
     p[1].type = AI;
     p[2].type = AI;
 
     p[0].difficulty = 0;
-    p[1].difficulty = 2;
-    p[2].difficulty = 1;
+    p[1].difficulty = 0;
+    p[2].difficulty = 0;
 
     // pick random piece and column
     for (int k=0; k<PLAYERS; k++) {
@@ -192,3 +201,4 @@ void next_frame(Player &p) {
         }
     }
 }
+

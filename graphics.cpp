@@ -7,6 +7,7 @@ SDL_Renderer* renderer = NULL;
 
 TTF_Font* Sans = NULL;
 TTF_Font* Small = NULL;
+TTF_Font* Bold = NULL;
 
 int max(const int a, const int b) {
     return a<b? b : a;
@@ -26,6 +27,8 @@ void init_graphics() {
 
     Sans = TTF_OpenFont("Andale.ttf", 36);
     Small = TTF_OpenFont("Andale.ttf", 14);
+    Bold = TTF_OpenFont("Andale.ttf", 36);
+    TTF_SetFontStyle( Bold, TTF_STYLE_BOLD);
 
     window = SDL_CreateWindow("", 0, 0, SCREEN_WIDTH, SCREEN_HEIGHT, SDL_WINDOW_RESIZABLE);
     renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC);
@@ -170,16 +173,22 @@ void print_board (Player &p, int xoffset, int yoffset) {
 
     if (p.new_piece) {
         char txt[10]; // text holder
-        sprintf(txt, "%7d", p.score);
-        create_text(p.txt.score, txt, Sans, 255, 255, 255);
+        sprintf(txt, "%7d", p.cleared_lines);
+        create_text(p.txt.cleared_lines, txt, Sans, 255, 255, 255);
 
-        if (p.level < 8) sprintf(txt, "%d", p.level);
-        else sprintf(txt, "8+");
-        create_text(p.txt.level, txt, Sans, 255, 255, 255);
+        if (p.level < 10) {
+            sprintf(txt, "%d", p.level);
+            create_text(p.txt.level, txt, Bold, 255, 255, 255);
+        }
+        else {
+            sprintf(txt, "X");
+            create_text(p.txt.level, txt, Bold, 128, 0, 255);
+        }
+
 
     }
 
-    render_text((xoffset + 6) * w, yoffset * w - weight/2, p.txt.score);
+    render_text((xoffset + 6) * w, yoffset * w - weight/2, p.txt.cleared_lines);
     render_text((xoffset + 1) * w + w/2 - weight/2, (yoffset + 4) * w - w / 4, p.txt.level);
 
     render_text((xoffset + 1) * w - weight/2, yoffset * w - weight, p.txt.player_type_label);
@@ -254,40 +263,51 @@ void draw_titlescreen() {
     SDL_FreeSurface(image);
 
     // draw menu options
-    SDL_Rect rectang1 = {200, 500, 100, 50};
-    SDL_Rect rectang2 = {600, 500, 100, 50};
-    SDL_Rect rectang3 = {1000, 500, 100, 50};
+    SDL_Rect rectang0 = {315, 470, 270, 50};
+    SDL_Rect rectang1 = {640, 470, 270, 50};
+    SDL_Rect rectang2 = {550, 550, 120, 50};
+    SDL_Rect rectang3 = {1080, 30, 50, 50};
 
     if (selected_menu == 0) {
-        SDL_SetRenderDrawColor(renderer, 100, 100, 100, SDL_ALPHA_OPAQUE);
+        SDL_SetRenderDrawColor(renderer, 150, 150, 150, SDL_ALPHA_OPAQUE);
     }
     else {
-        SDL_SetRenderDrawColor(renderer, 200, 200, 200, SDL_ALPHA_OPAQUE);
+        SDL_SetRenderDrawColor(renderer, 100, 100, 100, SDL_ALPHA_OPAQUE);
     }
-    SDL_RenderFillRect(renderer, &rectang1);
+    SDL_RenderFillRect(renderer, &rectang0);
     SDL_Texture *s = NULL;
-    create_text(s, "Solo", Sans, 255, 255, 255);
-    render_text(rectang1.x, rectang1.y, s);
+    create_text(s, "Singleplayer", Sans, 255, 255, 255);
+    render_text(rectang0.x + 4, rectang0.y + 4, s);
 
     if (selected_menu == 1) {
-        SDL_SetRenderDrawColor(renderer, 100, 100, 100, SDL_ALPHA_OPAQUE);
+        SDL_SetRenderDrawColor(renderer, 150, 150, 150, SDL_ALPHA_OPAQUE);
     }
     else {
-        SDL_SetRenderDrawColor(renderer, 200, 200, 200, SDL_ALPHA_OPAQUE);
+        SDL_SetRenderDrawColor(renderer, 100, 100, 100, SDL_ALPHA_OPAQUE);
     }
-    SDL_RenderFillRect(renderer, &rectang2);
-    create_text(s, "Coop", Sans, 255, 255, 255);
-    render_text(rectang2.x, rectang2.y, s);
+    SDL_RenderFillRect(renderer, &rectang1);
+    create_text(s, "Multiplayer", Sans, 255, 255, 255);
+    render_text(rectang1.x + 15, rectang1.y + 4, s);
 
     if (selected_menu == 2) {
-        SDL_SetRenderDrawColor(renderer, 100, 100, 100, SDL_ALPHA_OPAQUE);
+        SDL_SetRenderDrawColor(renderer, 150, 150, 150, SDL_ALPHA_OPAQUE);
     }
     else {
-        SDL_SetRenderDrawColor(renderer, 200, 200, 200, SDL_ALPHA_OPAQUE);
+        SDL_SetRenderDrawColor(renderer, 100, 100, 100, SDL_ALPHA_OPAQUE);
+    }
+    SDL_RenderFillRect(renderer, &rectang2);
+    create_text(s, "Quit", Sans, 255, 255, 255);
+    render_text(rectang2.x + 15, rectang2.y + 4, s);
+
+    if (selected_menu == 50) {
+        SDL_SetRenderDrawColor(renderer, 150, 150, 150, SDL_ALPHA_OPAQUE);
+    }
+    else {
+        SDL_SetRenderDrawColor(renderer, 100, 100, 100, SDL_ALPHA_OPAQUE);
     }
     SDL_RenderFillRect(renderer, &rectang3);
-    create_text(s, "Quit", Sans, 255, 255, 255);
-    render_text(rectang3.x, rectang3.y, s);
+    create_text(s, "ƒ", Sans, 255, 255, 255);
+    render_text(rectang3.x, rectang3.y + 4, s);
 
     SDL_RenderPresent(renderer);
 }

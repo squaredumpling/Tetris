@@ -11,27 +11,38 @@ enum PlayerType {P1, P2, AI};
 
 struct Player
 {
+    // player info
     PlayerType type;
+    int difficulty=0;
+
+    // state
+    bool falling=false;
     bool dead = false;
+
+    // scoring
     int level=0;
     int score=0;
     int cleared_lines=0;
-    bool falling=false;
+    int level_cleared_lines=0;
+    int focus_cleared_lines=0;
+    int drop_count=0;
+
+    // board state
     Board b;
     int x, y;
     Piece piece;
     Piece next[3];
-    int drop_count=0;
-    int lastTime=0;
-    int difficulty=0;
 
+    // ai
     bool new_piece = false;
     int ai_rotation=0;
     int ai_position=0;
+    int lastTime=0;
 
     struct Textures {
         SDL_Texture *score;
         SDL_Texture *level;
+        SDL_Texture *cleared_lines;
         SDL_Texture *next_label;
         SDL_Texture *level_label;
         SDL_Texture *ability_label;
@@ -66,23 +77,28 @@ int main (int argc, char* args[] ) {
                 switch(event.key.keysym.sym) {
                     case SDLK_LEFT: selected_menu = (selected_menu + 2) % 3; break;
                     case SDLK_RIGHT: selected_menu = (selected_menu + 1) % 3; break;
-                    case SDLK_RETURN: in_title=false; break;
+                    case SDLK_UP: selected_menu = 50; break;
+                    case SDLK_DOWN: selected_menu = 0; break;
+                    case SDLK_RETURN: in_title = false; break;
                 }
                 draw_titlescreen();
             }
             if (event.type == SDL_QUIT) exit(0);
         }
+        SDL_Delay(16);
     }
 
     switch(selected_menu) {
         case 0: PLAYERS = 1; break;
-        case 1: PLAYERS = 2; break;
+        case 1: PLAYERS = 3; break;
         case 2: exit(0);
     }
 
-    init_game();
+    init_game_state();
     for (int k=0; k<PLAYERS; k++)
         init_player_textures(p[k]);
+
+
 
     // main game loop
     while (true)
@@ -97,26 +113,9 @@ int main (int argc, char* args[] ) {
 
         // read human input
         SDL_Event event;
-        bool keypressed = false;
-        if (SDL_PollEvent(&event)) {
-            if (event.type == SDL_KEYDOWN) keypressed = true;
-            if (event.type == SDL_QUIT) break;
-        }
-
-        int currentTime = SDL_GetTicks();
-        for (int i=0; i<PLAYERS; i++)
-        {
-            switch(p[i].type)
-            {
-                case P1: if (keypressed && !p[i].dead) process_key(event, SDLK_w, SDLK_d, SDLK_a, SDLK_s, p[i]); break;
-                case P2: if (keypressed && !p[i].dead) process_key(event, SDLK_UP, SDLK_RIGHT, SDLK_LEFT, SDLK_DOWN, p[i]); break;
-                case AI: if (currentTime > p[i].lastTime && !p[i].dead) {
-                    ai_move(p[i]);
-                    p[i].lastTime = currentTime;
-                }
-                break;
-            }
-        }
+        if (SDL_PollEvent(&event) && event.type == SDL_QUIT)
+            break;
+        read_game_input();
 
         for (int k=0; k<PLAYERS; k++)
             next_frame(p[k]);
@@ -127,5 +126,4 @@ int main (int argc, char* args[] ) {
     SDL_DestroyWindow( window );
     IMG_Quit();
     SDL_Quit();
-
 }
