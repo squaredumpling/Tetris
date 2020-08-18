@@ -47,37 +47,54 @@ void rotate_piece (Piece from, Piece to) {
 
 int compute_score (int level, int lines) {
     int scores[] = {0, 100, 400, 900, 2000};
-    int lev=level;
 
-    if (lev > 8)
-        lev = 8;
-
-    return (lev/2 + 1) * scores[lines];
+    return (level/2 + 1) * scores[lines];
 }
 
 int clear_lines (Board b) {
     int lines=0;
-    for (int i=0 ; i<20; i++)
-    {
+    for (int i=0 ; i<20; i++) {
+
         // check if a row is full
         bool full=true;
-        for (int xx = 0 ; xx < 10 && full ; xx++)
-        {
+        for (int xx = 0 ; xx < 10 && full ; xx++) {
             if ( b[i][xx] == 0 )
                 full=false;
         }
 
         //clear line
-        if ( full )
-        {
-            for (int yy=i ; yy > 0 ; yy--)
-            {
+        if ( full ) {
+            for (int yy=i ; yy > 0 ; yy--) {
                 for (int xx=0 ; xx < 10 ; xx++)
-                {
                     b[yy][xx] = b[yy-1][xx];
-                }
             }
             lines++;
+        }
+    }
+    return lines;
+}
+
+int focus_clear_lines(Player &p) {
+    int lines=0;
+    for (int i = 19 - p.focus_cleared_lines ; i >= 0 ; i--) {
+        // check if a row is full
+        bool full=true;
+        for (int xx = 0 ; xx < 10 ; xx++) {
+            if ( p.b[i][xx] == 0 )
+                full=false;
+        }
+
+        //clear line
+        if ( full ) {
+            int yy;
+            for (yy=i+1 ; yy < 20 - p.focus_cleared_lines ; yy++) {
+                for (int xx=0 ; xx < 10 ; xx++)
+                    p.b[yy-1][xx] = p.b[yy][xx];
+            }
+            for (int xx=0 ; xx < 10 ; xx++)
+                p.b[yy-1][xx] = 10;
+            lines++;
+            p.focus_cleared_lines++;
         }
     }
     return lines;
@@ -107,16 +124,20 @@ void next_piece (Player &p) {
     freeze_piece(p.x, p.y, p.piece, p.b);
 
     // clear lines
-    int lines = clear_lines(p.b);
+    int lines=0;
+    if (p.focus_active)
+        focus_clear_lines(p);
+    else lines = clear_lines(p.b);
     p.cleared_lines += lines;
-    p.level_cleared_lines += lines;
-    p.focus_cleared_lines += lines;
+    p.level_clearing_lines += lines;
+    p.focus_clearing_lines += lines;
 
     p.score += compute_score(p.level, lines);
-    if (p.cleared_lines >= 8)
-    {
-        p.level++;
-        p.cleared_lines = 0;
+    if (p.level_clearing_lines >= 4+2*p.level) {
+        if (p.level <= 10)
+            p.level++;
+
+        p.level_clearing_lines = 0;
     }
 
     init_crt_piece(p);
@@ -199,6 +220,21 @@ void next_frame(Player &p) {
                 p.drop_count = 0;
             }
         }
+
+        // expire focus
+        if (p.focus_active && (SDL_GetTicks() - p.focus_timestamp >= 30000)) {
+            p.focus_active = false;
+            int cl = clear_lines(p.b);
+        }
     }
 }
 
+bool can_activate_focus(const Player p) {
+    return (p.focus_clearing_lines >= 10 && !p.focus_active);
+}
+
+void activate_focus(Player &p){
+    p.focus_active = true;
+    p.focus_timestamp = SDL_GetTicks();
+    p.focus_cleared_lines = 0;
+}

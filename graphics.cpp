@@ -171,8 +171,19 @@ void print_board (Player &p, int xoffset, int yoffset) {
     SDL_RenderDrawLine(renderer, xoffset*w-1+w/2 - weight/2, (yoffset+15)*w + w/2, (xoffset+3)*w-1 + w/2 - weight/2, (yoffset+15)*w + w/2);
     SDL_RenderDrawLine(renderer, xoffset*w-1+w/2 - weight/2, (yoffset+18)*w + w/2, (xoffset+3)*w-1 + w/2 - weight/2, (yoffset+18)*w + w/2);
 
+    char txt[10]; // text holder
+
+    if (can_activate_focus(p)){
+        sprintf(txt, "F");
+        create_text(p.txt.focus_active, txt, Sans, 255, 255, 255);
+    }
+
+    if (p.focus_active){
+        sprintf(txt, "X");
+        create_text(p.txt.focus_active, txt, Sans, 255, 255, 255);
+    }
+
     if (p.new_piece) {
-        char txt[10]; // text holder
         sprintf(txt, "%7d", p.cleared_lines);
         create_text(p.txt.cleared_lines, txt, Sans, 255, 255, 255);
 
@@ -184,13 +195,11 @@ void print_board (Player &p, int xoffset, int yoffset) {
             sprintf(txt, "X");
             create_text(p.txt.level, txt, Bold, 128, 0, 255);
         }
-
-
     }
 
     render_text((xoffset + 6) * w, yoffset * w - weight/2, p.txt.cleared_lines);
     render_text((xoffset + 1) * w + w/2 - weight/2, (yoffset + 4) * w - w / 4, p.txt.level);
-
+    render_text(xoffset * w + w / 2 + 2 - weight/2, (yoffset + 8) * w, p.txt.focus_active);
     render_text((xoffset + 1) * w - weight/2, yoffset * w - weight, p.txt.player_type_label);
     render_text((xoffset + 1) * w - weight/2, (yoffset + 2) * w + w / 2 + 2, p.txt.level_label);
     render_text(xoffset * w + w / 2 + 2 - weight/2, (yoffset + 7) * w + 2, p.txt.ability_label);
@@ -208,7 +217,6 @@ void print_board (Player &p, int xoffset, int yoffset) {
                 // current piece
                 int c = p.piece[i-p.y][j-p.x];
                 SDL_SetRenderDrawColor(renderer, piece_colors[c][0], piece_colors[c][1], piece_colors[c][2], SDL_ALPHA_OPAQUE);
-
             }
             else {
                 // stationary block

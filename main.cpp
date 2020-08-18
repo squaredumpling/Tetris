@@ -23,9 +23,13 @@ struct Player
     int level=0;
     int score=0;
     int cleared_lines=0;
-    int level_cleared_lines=0;
+    int level_clearing_lines=0;
+    int focus_clearing_lines=0;
     int focus_cleared_lines=0;
     int drop_count=0;
+
+    bool focus_active = true;
+    int focus_timestamp = 0;
 
     // board state
     Board b;
@@ -43,6 +47,7 @@ struct Player
         SDL_Texture *score;
         SDL_Texture *level;
         SDL_Texture *cleared_lines;
+        SDL_Texture *focus_active;
         SDL_Texture *next_label;
         SDL_Texture *level_label;
         SDL_Texture *ability_label;
