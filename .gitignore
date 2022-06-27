@@ -1,6 +1,11 @@
+**/.DS_Store
 *.layout
 *.depend
 bin/
 obj/
 .idea/
 cmake-build-debug/
+build/**/*
+Debug/**/*
+tetris.build/**/*
+CMakeFiles/**/*

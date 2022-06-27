@@ -1,0 +1,820 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 54;
+	objects = {
+
+/* Begin PBXAggregateTarget section */
+		7C46F11B78C54E88B9A75EB4 /* ALL_BUILD */ = {
+			isa = PBXAggregateTarget;
+			buildConfigurationList = 50D952BB08A542198B9A08E4 /* Build configuration list for PBXAggregateTarget "ALL_BUILD" */;
+			buildPhases = (
+				DAD27B5CEB134B4DDB34D189 /* Generate CMakeFiles/ALL_BUILD */,
+			);
+			dependencies = (
+				EC78A7D9A40B4942B5D1B96A /* PBXTargetDependency */,
+				084C30C016BB4F479D970957 /* PBXTargetDependency */,
+			);
+			name = ALL_BUILD;
+			productName = ALL_BUILD;
+		};
+		9D08B5D40C774CE1A19F868B /* ZERO_CHECK */ = {
+			isa = PBXAggregateTarget;
+			buildConfigurationList = 0729CE32A679410EA2BF8805 /* Build configuration list for PBXAggregateTarget "ZERO_CHECK" */;
+			buildPhases = (
+				E6F1416737F92D7BD46BB6CE /* Generate CMakeFiles/ZERO_CHECK */,
+			);
+			dependencies = (
+			);
+			name = ZERO_CHECK;
+			productName = ZERO_CHECK;
+		};
+/* End PBXAggregateTarget section */
+
+/* Begin PBXBuildFile section */
+		586593A4FD6D4AF081B0AC02 /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 912A62F0A1E64679B34FE332 /* main.cpp */; };
+		C548A419286A110D00470694 /* cover.jpg in CopyFiles */ = {isa = PBXBuildFile; fileRef = C548A418286A10FA00470694 /* cover.jpg */; };
+		C548A41A286A110D00470694 /* Andale.ttf in CopyFiles */ = {isa = PBXBuildFile; fileRef = C548A417286A10EC00470694 /* Andale.ttf */; };
+		C548A41E286A15A100470694 /* mechanics.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C548A41D286A156800470694 /* mechanics.cpp */; };
+		C548A422286A1B0500470694 /* piece_characteristics.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C548A421286A1AED00470694 /* piece_characteristics.cpp */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		0CA71AEC9B3F45DD9816AF97 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 3076F6ED451445DCABB19EEF /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 9D08B5D40C774CE1A19F868B;
+			remoteInfo = ZERO_CHECK;
+		};
+		6FD32FBC8C5C41D2BA886AB1 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 3076F6ED451445DCABB19EEF /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 694FA986C3C4462C814210A2;
+			remoteInfo = tetris;
+		};
+		F796D1F2DC6749A6990723E0 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 3076F6ED451445DCABB19EEF /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 9D08B5D40C774CE1A19F868B;
+			remoteInfo = ZERO_CHECK;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		C548A415286A10AA00470694 /* CopyFiles */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 16;
+			files = (
+				C548A419286A110D00470694 /* cover.jpg in CopyFiles */,
+				C548A41A286A110D00470694 /* Andale.ttf in CopyFiles */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
+/* Begin PBXFileReference section */
+		5812F1441F7E43AD9B4EB4B2 /* CMakeLists.txt */ = {isa = PBXFileReference; explicitFileType = sourcecode.text; fileEncoding = 4; lastKnownFileType = text; path = CMakeLists.txt; sourceTree = SOURCE_ROOT; };
+		912A62F0A1E64679B34FE332 /* main.cpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.cpp; fileEncoding = 4; path = main.cpp; sourceTree = SOURCE_ROOT; };
+		C548A417286A10EC00470694 /* Andale.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = Andale.ttf; sourceTree = "<group>"; };
+		C548A418286A10FA00470694 /* cover.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = cover.jpg; sourceTree = "<group>"; };
+		C548A41B286A136500470694 /* mechanics.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = mechanics.h; sourceTree = "<group>"; };
+		C548A41D286A156800470694 /* mechanics.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = mechanics.cpp; sourceTree = "<group>"; };
+		C548A41F286A16C300470694 /* common.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = common.h; sourceTree = "<group>"; };
+		C548A420286A1A6300470694 /* pieces.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = pieces.h; sourceTree = "<group>"; };
+		C548A421286A1AED00470694 /* piece_characteristics.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = piece_characteristics.cpp; sourceTree = "<group>"; };
+		D84C499FDBB14130A178B03C /* tetris */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; path = tetris; sourceTree = BUILT_PRODUCTS_DIR; };
+		DC0DEB45A96C4B6782E82A98 /* CMakeLists.txt */ = {isa = PBXFileReference; explicitFileType = sourcecode.text; fileEncoding = 4; lastKnownFileType = text; path = CMakeLists.txt; sourceTree = SOURCE_ROOT; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		1D8A3567BAD34A2194C31726 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		0025DB90ED8C4005846DDE5C /* ALL_BUILD */ = {
+			isa = PBXGroup;
+			children = (
+				258749B21C874E98BE5FABFF /* CMake Rules */,
+				DC0DEB45A96C4B6782E82A98 /* CMakeLists.txt */,
+			);
+			name = ALL_BUILD;
+			sourceTree = "<group>";
+		};
+		258749B21C874E98BE5FABFF /* CMake Rules */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = "CMake Rules";
+			sourceTree = "<group>";
+		};
+		430498BC0DBC4D03925E66C6 /* tetris */ = {
+			isa = PBXGroup;
+			children = (
+				C548A41C286A150200470694 /* Headers */,
+				C548A416286A10D400470694 /* Resources */,
+				961ECE09B01A449ABD833338 /* Source Files */,
+				5812F1441F7E43AD9B4EB4B2 /* CMakeLists.txt */,
+			);
+			name = tetris;
+			sourceTree = "<group>";
+		};
+		499E62F5DF3346F095DCBFF2 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				D84C499FDBB14130A178B03C /* tetris */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		60A828E371584968AE2E788E /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		82D900DD7E7844D39BADA1E1 = {
+			isa = PBXGroup;
+			children = (
+				430498BC0DBC4D03925E66C6 /* tetris */,
+				0025DB90ED8C4005846DDE5C /* ALL_BUILD */,
+				499E62F5DF3346F095DCBFF2 /* Products */,
+				60A828E371584968AE2E788E /* Frameworks */,
+			);
+			sourceTree = "<group>";
+		};
+		961ECE09B01A449ABD833338 /* Source Files */ = {
+			isa = PBXGroup;
+			children = (
+				C548A421286A1AED00470694 /* piece_characteristics.cpp */,
+				C548A41D286A156800470694 /* mechanics.cpp */,
+				912A62F0A1E64679B34FE332 /* main.cpp */,
+			);
+			name = "Source Files";
+			sourceTree = "<group>";
+		};
+		C548A416286A10D400470694 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				C548A418286A10FA00470694 /* cover.jpg */,
+				C548A417286A10EC00470694 /* Andale.ttf */,
+			);
+			name = Resources;
+			sourceTree = "<group>";
+		};
+		C548A41C286A150200470694 /* Headers */ = {
+			isa = PBXGroup;
+			children = (
+				C548A41F286A16C300470694 /* common.h */,
+				C548A41B286A136500470694 /* mechanics.h */,
+				C548A420286A1A6300470694 /* pieces.h */,
+			);
+			name = Headers;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		694FA986C3C4462C814210A2 /* tetris */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = E963265A8E4642EEB6C0057F /* Build configuration list for PBXNativeTarget "tetris" */;
+			buildPhases = (
+				DD7B69C252284500A1EBBB3E /* Sources */,
+				1D8A3567BAD34A2194C31726 /* Frameworks */,
+				C548A415286A10AA00470694 /* CopyFiles */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				D235598048B942708C83D4B5 /* PBXTargetDependency */,
+			);
+			name = tetris;
+			productName = tetris;
+			productReference = D84C499FDBB14130A178B03C /* tetris */;
+			productType = "com.apple.product-type.tool";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		3076F6ED451445DCABB19EEF /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 1340;
+			};
+			buildConfigurationList = 94DEC7BC4E52457B89ED33A2 /* Build configuration list for PBXProject "tetris" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = 82D900DD7E7844D39BADA1E1;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				7C46F11B78C54E88B9A75EB4 /* ALL_BUILD */,
+				9D08B5D40C774CE1A19F868B /* ZERO_CHECK */,
+				694FA986C3C4462C814210A2 /* tetris */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		DAD27B5CEB134B4DDB34D189 /* Generate CMakeFiles/ALL_BUILD */ = {
+			isa = PBXShellScriptBuildPhase;
+			alwaysOutOfDate = 1;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Generate CMakeFiles/ALL_BUILD";
+			outputPaths = (
+				/Users/mihneabuzoiu/Documents/GitHub/tetris/CMakeFiles/ALL_BUILD,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "set -e\nif test \"$CONFIGURATION\" = \"Debug\"; then :\n  cd /Users/mihneabuzoiu/Documents/GitHub/tetris\n  echo Build\\ all\\ projects\nfi\nif test \"$CONFIGURATION\" = \"Release\"; then :\n  cd /Users/mihneabuzoiu/Documents/GitHub/tetris\n  echo Build\\ all\\ projects\nfi\nif test \"$CONFIGURATION\" = \"MinSizeRel\"; then :\n  cd /Users/mihneabuzoiu/Documents/GitHub/tetris\n  echo Build\\ all\\ projects\nfi\nif test \"$CONFIGURATION\" = \"RelWithDebInfo\"; then :\n  cd /Users/mihneabuzoiu/Documents/GitHub/tetris\n  echo Build\\ all\\ projects\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+		E6F1416737F92D7BD46BB6CE /* Generate CMakeFiles/ZERO_CHECK */ = {
+			isa = PBXShellScriptBuildPhase;
+			alwaysOutOfDate = 1;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Generate CMakeFiles/ZERO_CHECK";
+			outputPaths = (
+				/Users/mihneabuzoiu/Documents/GitHub/tetris/CMakeFiles/ZERO_CHECK,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "set -e\nif test \"$CONFIGURATION\" = \"Debug\"; then :\n  cd /Users/mihneabuzoiu/Documents/GitHub/tetris\n  make -f /Users/mihneabuzoiu/Documents/GitHub/tetris/CMakeScripts/ReRunCMake.make\nfi\nif test \"$CONFIGURATION\" = \"Release\"; then :\n  cd /Users/mihneabuzoiu/Documents/GitHub/tetris\n  make -f /Users/mihneabuzoiu/Documents/GitHub/tetris/CMakeScripts/ReRunCMake.make\nfi\nif test \"$CONFIGURATION\" = \"MinSizeRel\"; then :\n  cd /Users/mihneabuzoiu/Documents/GitHub/tetris\n  make -f /Users/mihneabuzoiu/Documents/GitHub/tetris/CMakeScripts/ReRunCMake.make\nfi\nif test \"$CONFIGURATION\" = \"RelWithDebInfo\"; then :\n  cd /Users/mihneabuzoiu/Documents/GitHub/tetris\n  make -f /Users/mihneabuzoiu/Documents/GitHub/tetris/CMakeScripts/ReRunCMake.make\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		DD7B69C252284500A1EBBB3E /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				C548A422286A1B0500470694 /* piece_characteristics.cpp in Sources */,
+				C548A41E286A15A100470694 /* mechanics.cpp in Sources */,
+				586593A4FD6D4AF081B0AC02 /* main.cpp in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		084C30C016BB4F479D970957 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 9D08B5D40C774CE1A19F868B /* ZERO_CHECK */;
+			targetProxy = F796D1F2DC6749A6990723E0 /* PBXContainerItemProxy */;
+		};
+		D235598048B942708C83D4B5 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 9D08B5D40C774CE1A19F868B /* ZERO_CHECK */;
+			targetProxy = 0CA71AEC9B3F45DD9816AF97 /* PBXContainerItemProxy */;
+		};
+		EC78A7D9A40B4942B5D1B96A /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 694FA986C3C4462C814210A2 /* tetris */;
+			targetProxy = 6FD32FBC8C5C41D2BA886AB1 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin XCBuildConfiguration section */
+		2BFC47EA61984A589B82CB66 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = "$(NATIVE_ARCH_ACTUAL)";
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX12.3.sdk;
+				SYMROOT = /Users/mihneabuzoiu/Documents/GitHub/tetris/build;
+			};
+			name = Release;
+		};
+		2D4323BDE7D547D6ADB67B35 /* MinSizeRel */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = "$(NATIVE_ARCH_ACTUAL)";
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX12.3.sdk;
+				SYMROOT = /Users/mihneabuzoiu/Documents/GitHub/tetris/build;
+			};
+			name = MinSizeRel;
+		};
+		39D7E2F1662B40008BA6CFCC /* MinSizeRel */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COMBINE_HIDPI_IMAGES = YES;
+				EXECUTABLE_PREFIX = "";
+				EXECUTABLE_SUFFIX = "";
+				FRAMEWORK_SEARCH_PATHS = (
+					/Library/Frameworks,
+					"$(inherited)",
+				);
+				GCC_GENERATE_DEBUGGING_SYMBOLS = NO;
+				GCC_INLINES_ARE_PRIVATE_EXTERN = NO;
+				GCC_OPTIMIZATION_LEVEL = s;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"'CMAKE_INTDIR=\"$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)\"'",
+					"$(inherited)",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				HEADER_SEARCH_PATHS = (
+					/Library/Frameworks/SDL2.framework/Headers,
+					/Library/Frameworks/SDL2_ttf.framework/Headers,
+					/Library/Frameworks/SDL2_image.framework/Headers,
+					"$(inherited)",
+				);
+				INSTALL_PATH = "";
+				LD_RUNPATH_SEARCH_PATHS = (
+					/Library/Frameworks,
+					"$(inherited)",
+				);
+				OTHER_CPLUSPLUSFLAGS = (
+					"-DNDEBUG",
+					"'-std=gnu++14'",
+				);
+				OTHER_LDFLAGS = (
+					"-Wl,-search_paths_first",
+					"-Wl,-headerpad_max_install_names",
+					"-framework",
+					SDL2,
+					"-framework",
+					Cocoa,
+					"-framework",
+					SDL2_ttf,
+					"-framework",
+					Cocoa,
+					"-framework",
+					SDL2_image,
+					"-framework",
+					SDL2_ttf,
+					"-framework",
+					SDL2_image,
+					"$(inherited)",
+				);
+				OTHER_REZFLAGS = "";
+				PRODUCT_NAME = tetris;
+				SECTORDER_FLAGS = "";
+				SYMROOT = /Users/mihneabuzoiu/Documents/GitHub/tetris;
+				USE_HEADERMAP = NO;
+				WARNING_CFLAGS = "$(inherited)";
+			};
+			name = MinSizeRel;
+		};
+		3C457A731820410D880537E6 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COMBINE_HIDPI_IMAGES = YES;
+				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
+				GCC_INLINES_ARE_PRIVATE_EXTERN = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"'CMAKE_INTDIR=\"$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)\"'",
+					"$(inherited)",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				INSTALL_PATH = "";
+				OTHER_LDFLAGS = " $(inherited)";
+				OTHER_REZFLAGS = "";
+				PRODUCT_NAME = ZERO_CHECK;
+				SECTORDER_FLAGS = "";
+				SYMROOT = /Users/mihneabuzoiu/Documents/GitHub/tetris;
+				USE_HEADERMAP = NO;
+				WARNING_CFLAGS = "$(inherited)";
+			};
+			name = Debug;
+		};
+		40C4A2CBB1F44DD5BC5DC629 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COMBINE_HIDPI_IMAGES = YES;
+				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
+				GCC_INLINES_ARE_PRIVATE_EXTERN = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"'CMAKE_INTDIR=\"$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)\"'",
+					"$(inherited)",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				INSTALL_PATH = "";
+				OTHER_LDFLAGS = " $(inherited)";
+				OTHER_REZFLAGS = "";
+				PRODUCT_NAME = ALL_BUILD;
+				SECTORDER_FLAGS = "";
+				SYMROOT = /Users/mihneabuzoiu/Documents/GitHub/tetris;
+				USE_HEADERMAP = NO;
+				WARNING_CFLAGS = "$(inherited)";
+			};
+			name = Release;
+		};
+		5A9D84307FD94E3C8469DE13 /* RelWithDebInfo */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = "$(NATIVE_ARCH_ACTUAL)";
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX12.3.sdk;
+				SYMROOT = /Users/mihneabuzoiu/Documents/GitHub/tetris/build;
+			};
+			name = RelWithDebInfo;
+		};
+		8EF9030A9F3F4390985C0855 /* RelWithDebInfo */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COMBINE_HIDPI_IMAGES = YES;
+				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
+				GCC_INLINES_ARE_PRIVATE_EXTERN = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"'CMAKE_INTDIR=\"$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)\"'",
+					"$(inherited)",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				INSTALL_PATH = "";
+				OTHER_LDFLAGS = " $(inherited)";
+				OTHER_REZFLAGS = "";
+				PRODUCT_NAME = ZERO_CHECK;
+				SECTORDER_FLAGS = "";
+				SYMROOT = /Users/mihneabuzoiu/Documents/GitHub/tetris;
+				USE_HEADERMAP = NO;
+				WARNING_CFLAGS = "$(inherited)";
+			};
+			name = RelWithDebInfo;
+		};
+		9EBF89FDCF2C47BB93F6F6ED /* RelWithDebInfo */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COMBINE_HIDPI_IMAGES = YES;
+				EXECUTABLE_PREFIX = "";
+				EXECUTABLE_SUFFIX = "";
+				FRAMEWORK_SEARCH_PATHS = (
+					/Library/Frameworks,
+					"$(inherited)",
+				);
+				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
+				GCC_INLINES_ARE_PRIVATE_EXTERN = NO;
+				GCC_OPTIMIZATION_LEVEL = 2;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"'CMAKE_INTDIR=\"$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)\"'",
+					"$(inherited)",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				HEADER_SEARCH_PATHS = (
+					/Library/Frameworks/SDL2.framework/Headers,
+					/Library/Frameworks/SDL2_ttf.framework/Headers,
+					/Library/Frameworks/SDL2_image.framework/Headers,
+					"$(inherited)",
+				);
+				INSTALL_PATH = "";
+				LD_RUNPATH_SEARCH_PATHS = (
+					/Library/Frameworks,
+					"$(inherited)",
+				);
+				OTHER_CPLUSPLUSFLAGS = (
+					"-DNDEBUG",
+					"'-std=gnu++14'",
+				);
+				OTHER_LDFLAGS = (
+					"-Wl,-search_paths_first",
+					"-Wl,-headerpad_max_install_names",
+					"-framework",
+					SDL2,
+					"-framework",
+					Cocoa,
+					"-framework",
+					SDL2_ttf,
+					"-framework",
+					Cocoa,
+					"-framework",
+					SDL2_image,
+					"-framework",
+					SDL2_ttf,
+					"-framework",
+					SDL2_image,
+					"$(inherited)",
+				);
+				OTHER_REZFLAGS = "";
+				PRODUCT_NAME = tetris;
+				SECTORDER_FLAGS = "";
+				SYMROOT = /Users/mihneabuzoiu/Documents/GitHub/tetris;
+				USE_HEADERMAP = NO;
+				WARNING_CFLAGS = "$(inherited)";
+			};
+			name = RelWithDebInfo;
+		};
+		B3BD4CEDDE1B43FB89B61FCC /* RelWithDebInfo */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COMBINE_HIDPI_IMAGES = YES;
+				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
+				GCC_INLINES_ARE_PRIVATE_EXTERN = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"'CMAKE_INTDIR=\"$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)\"'",
+					"$(inherited)",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				INSTALL_PATH = "";
+				OTHER_LDFLAGS = " $(inherited)";
+				OTHER_REZFLAGS = "";
+				PRODUCT_NAME = ALL_BUILD;
+				SECTORDER_FLAGS = "";
+				SYMROOT = /Users/mihneabuzoiu/Documents/GitHub/tetris;
+				USE_HEADERMAP = NO;
+				WARNING_CFLAGS = "$(inherited)";
+			};
+			name = RelWithDebInfo;
+		};
+		B4C222E501054A40AAEB8703 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COMBINE_HIDPI_IMAGES = YES;
+				EXECUTABLE_PREFIX = "";
+				EXECUTABLE_SUFFIX = "";
+				FRAMEWORK_SEARCH_PATHS = (
+					/Library/Frameworks,
+					"$(inherited)",
+				);
+				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
+				GCC_INLINES_ARE_PRIVATE_EXTERN = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"'CMAKE_INTDIR=\"$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)\"'",
+					"$(inherited)",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				HEADER_SEARCH_PATHS = (
+					/Library/Frameworks/SDL2.framework/Headers,
+					/Library/Frameworks/SDL2_ttf.framework/Headers,
+					/Library/Frameworks/SDL2_image.framework/Headers,
+					"$(inherited)",
+				);
+				INSTALL_PATH = "";
+				LD_RUNPATH_SEARCH_PATHS = (
+					/Library/Frameworks,
+					"$(inherited)",
+				);
+				OTHER_CPLUSPLUSFLAGS = "   '-std=gnu++14' ";
+				OTHER_LDFLAGS = (
+					"-Wl,-search_paths_first",
+					"-Wl,-headerpad_max_install_names",
+					"-framework",
+					SDL2,
+					"-framework",
+					Cocoa,
+					"-framework",
+					SDL2_ttf,
+					"-framework",
+					Cocoa,
+					"-framework",
+					SDL2_image,
+					"-framework",
+					SDL2_ttf,
+					"-framework",
+					SDL2_image,
+					"$(inherited)",
+				);
+				OTHER_REZFLAGS = "";
+				PRODUCT_NAME = tetris;
+				SECTORDER_FLAGS = "";
+				SYMROOT = /Users/mihneabuzoiu/Documents/GitHub/tetris;
+				USE_HEADERMAP = NO;
+				WARNING_CFLAGS = "$(inherited)";
+			};
+			name = Debug;
+		};
+		B8B0C5319F1C41AABA8787CA /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = "$(NATIVE_ARCH_ACTUAL)";
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX12.3.sdk;
+				SYMROOT = /Users/mihneabuzoiu/Documents/GitHub/tetris/build;
+			};
+			name = Debug;
+		};
+		D5028489C1CC445FB6F22323 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COMBINE_HIDPI_IMAGES = YES;
+				EXECUTABLE_PREFIX = "";
+				EXECUTABLE_SUFFIX = "";
+				FRAMEWORK_SEARCH_PATHS = (
+					/Library/Frameworks,
+					"$(inherited)",
+				);
+				GCC_GENERATE_DEBUGGING_SYMBOLS = NO;
+				GCC_INLINES_ARE_PRIVATE_EXTERN = NO;
+				GCC_OPTIMIZATION_LEVEL = 3;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"'CMAKE_INTDIR=\"$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)\"'",
+					"$(inherited)",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				HEADER_SEARCH_PATHS = (
+					/Library/Frameworks/SDL2.framework/Headers,
+					/Library/Frameworks/SDL2_ttf.framework/Headers,
+					/Library/Frameworks/SDL2_image.framework/Headers,
+					"$(inherited)",
+				);
+				INSTALL_PATH = "";
+				LD_RUNPATH_SEARCH_PATHS = (
+					/Library/Frameworks,
+					"$(inherited)",
+				);
+				OTHER_CPLUSPLUSFLAGS = (
+					"-DNDEBUG",
+					"'-std=gnu++14'",
+				);
+				OTHER_LDFLAGS = (
+					"-Wl,-search_paths_first",
+					"-Wl,-headerpad_max_install_names",
+					"-framework",
+					SDL2,
+					"-framework",
+					Cocoa,
+					"-framework",
+					SDL2_ttf,
+					"-framework",
+					Cocoa,
+					"-framework",
+					SDL2_image,
+					"-framework",
+					SDL2_ttf,
+					"-framework",
+					SDL2_image,
+					"$(inherited)",
+				);
+				OTHER_REZFLAGS = "";
+				PRODUCT_NAME = tetris;
+				SECTORDER_FLAGS = "";
+				SYMROOT = /Users/mihneabuzoiu/Documents/GitHub/tetris;
+				USE_HEADERMAP = NO;
+				WARNING_CFLAGS = "$(inherited)";
+			};
+			name = Release;
+		};
+		D898433B5E44485796010C7C /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COMBINE_HIDPI_IMAGES = YES;
+				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
+				GCC_INLINES_ARE_PRIVATE_EXTERN = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"'CMAKE_INTDIR=\"$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)\"'",
+					"$(inherited)",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				INSTALL_PATH = "";
+				OTHER_LDFLAGS = " $(inherited)";
+				OTHER_REZFLAGS = "";
+				PRODUCT_NAME = ALL_BUILD;
+				SECTORDER_FLAGS = "";
+				SYMROOT = /Users/mihneabuzoiu/Documents/GitHub/tetris;
+				USE_HEADERMAP = NO;
+				WARNING_CFLAGS = "$(inherited)";
+			};
+			name = Debug;
+		};
+		DD4BAF6849454DB38C289DAA /* MinSizeRel */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COMBINE_HIDPI_IMAGES = YES;
+				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
+				GCC_INLINES_ARE_PRIVATE_EXTERN = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"'CMAKE_INTDIR=\"$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)\"'",
+					"$(inherited)",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				INSTALL_PATH = "";
+				OTHER_LDFLAGS = " $(inherited)";
+				OTHER_REZFLAGS = "";
+				PRODUCT_NAME = ALL_BUILD;
+				SECTORDER_FLAGS = "";
+				SYMROOT = /Users/mihneabuzoiu/Documents/GitHub/tetris;
+				USE_HEADERMAP = NO;
+				WARNING_CFLAGS = "$(inherited)";
+			};
+			name = MinSizeRel;
+		};
+		DF18389794F740ECAAF238FF /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COMBINE_HIDPI_IMAGES = YES;
+				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
+				GCC_INLINES_ARE_PRIVATE_EXTERN = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"'CMAKE_INTDIR=\"$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)\"'",
+					"$(inherited)",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				INSTALL_PATH = "";
+				OTHER_LDFLAGS = " $(inherited)";
+				OTHER_REZFLAGS = "";
+				PRODUCT_NAME = ZERO_CHECK;
+				SECTORDER_FLAGS = "";
+				SYMROOT = /Users/mihneabuzoiu/Documents/GitHub/tetris;
+				USE_HEADERMAP = NO;
+				WARNING_CFLAGS = "$(inherited)";
+			};
+			name = Release;
+		};
+		F32F9B114DCF457E8172D29A /* MinSizeRel */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COMBINE_HIDPI_IMAGES = YES;
+				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
+				GCC_INLINES_ARE_PRIVATE_EXTERN = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"'CMAKE_INTDIR=\"$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)\"'",
+					"$(inherited)",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				INSTALL_PATH = "";
+				OTHER_LDFLAGS = " $(inherited)";
+				OTHER_REZFLAGS = "";
+				PRODUCT_NAME = ZERO_CHECK;
+				SECTORDER_FLAGS = "";
+				SYMROOT = /Users/mihneabuzoiu/Documents/GitHub/tetris;
+				USE_HEADERMAP = NO;
+				WARNING_CFLAGS = "$(inherited)";
+			};
+			name = MinSizeRel;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		0729CE32A679410EA2BF8805 /* Build configuration list for PBXAggregateTarget "ZERO_CHECK" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				3C457A731820410D880537E6 /* Debug */,
+				DF18389794F740ECAAF238FF /* Release */,
+				F32F9B114DCF457E8172D29A /* MinSizeRel */,
+				8EF9030A9F3F4390985C0855 /* RelWithDebInfo */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+		50D952BB08A542198B9A08E4 /* Build configuration list for PBXAggregateTarget "ALL_BUILD" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				D898433B5E44485796010C7C /* Debug */,
+				40C4A2CBB1F44DD5BC5DC629 /* Release */,
+				DD4BAF6849454DB38C289DAA /* MinSizeRel */,
+				B3BD4CEDDE1B43FB89B61FCC /* RelWithDebInfo */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+		94DEC7BC4E52457B89ED33A2 /* Build configuration list for PBXProject "tetris" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				B8B0C5319F1C41AABA8787CA /* Debug */,
+				2BFC47EA61984A589B82CB66 /* Release */,
+				2D4323BDE7D547D6ADB67B35 /* MinSizeRel */,
+				5A9D84307FD94E3C8469DE13 /* RelWithDebInfo */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+		E963265A8E4642EEB6C0057F /* Build configuration list for PBXNativeTarget "tetris" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				B4C222E501054A40AAEB8703 /* Debug */,
+				D5028489C1CC445FB6F22323 /* Release */,
+				39D7E2F1662B40008BA6CFCC /* MinSizeRel */,
+				9EBF89FDCF2C47BB93F6F6ED /* RelWithDebInfo */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 3076F6ED451445DCABB19EEF /* Project object */;
+}

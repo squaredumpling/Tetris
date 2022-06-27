@@ -7,7 +7,7 @@ void process_key (SDL_Keycode up, SDL_Keycode rg, SDL_Keycode lf, SDL_Keycode dw
     if (state[fs] && can_activate_focus(p)) activate_focus(p);
 }
 
-void read_game_input() {
+void read_game_input(Player p[], const int PLAYERS) {
     int currentTime = SDL_GetTicks();
     for (int i=0; i<PLAYERS; i++)
     {

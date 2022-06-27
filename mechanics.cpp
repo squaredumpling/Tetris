@@ -1,3 +1,7 @@
+#include "mechanics.h"
+#include "pieces.h"
+#include <math.h>
+
 
 void freeze_piece (int x, int y, Piece piece, Board b) {
     for (int i=0; i<4; i++)
@@ -178,28 +182,6 @@ void clear_board (Player &p) {
     }
 }
 
-void init_game_state() {
-    // empty boards
-    for (int k=0; k<PLAYERS; k++)
-        clear_board(p[k]);
-
-    p[0].type = AI;
-    p[1].type = AI;
-    p[2].type = AI;
-
-    p[0].difficulty = 0;
-    p[1].difficulty = 0;
-    p[2].difficulty = 0;
-
-    // pick random piece and column
-    for (int k=0; k<PLAYERS; k++) {
-        random_piece(p[k].piece);
-        random_piece(p[k].next[0]);
-        random_piece(p[k].next[1]);
-        random_piece(p[k].next[2]);
-        init_crt_piece(p[k]);
-    }
-}
 
 void next_frame(Player &p) {
     if (!p.dead) {
@@ -222,7 +204,7 @@ void next_frame(Player &p) {
         }
 
         // expire focus
-        if (p.focus_active && (SDL_GetTicks() - p.focus_timestamp >= 30000)) {
+        if (p.focus_active && (SDL_GetTicks() - p.focus_timestamp >= 10000)) {
             p.focus_active = false;
             int cl = clear_lines(p.b);
         }

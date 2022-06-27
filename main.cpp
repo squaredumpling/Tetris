@@ -4,67 +4,41 @@
 #include <SDL_image.h>
 #include <math.h>
 
-typedef int Piece[4][4];
-typedef int Board[20][10];
 
-enum PlayerType {P1, P2, AI};
+#include "pieces.h"
+#include "mechanics.h"
+#include "ai.cpp"
+#include "graphics.cpp"
+#include "input.cpp"
+using namespace std;
 
-struct Player
-{
-    // player info
-    PlayerType type;
-    int difficulty=0;
-
-    // state
-    bool falling=false;
-    bool dead = false;
-
-    // scoring
-    int level=0;
-    int score=0;
-    int cleared_lines=0;
-    int level_clearing_lines=0;
-    int focus_clearing_lines=0;
-    int focus_cleared_lines=0;
-    int drop_count=0;
-
-    bool focus_active = true;
-    int focus_timestamp = 0;
-
-    // board state
-    Board b;
-    int x, y;
-    Piece piece;
-    Piece next[3];
-
-    // ai
-    bool new_piece = false;
-    int ai_rotation=0;
-    int ai_position=0;
-    int lastTime=0;
-
-    struct Textures {
-        SDL_Texture *score;
-        SDL_Texture *level;
-        SDL_Texture *cleared_lines;
-        SDL_Texture *focus_active;
-        SDL_Texture *next_label;
-        SDL_Texture *level_label;
-        SDL_Texture *ability_label;
-        SDL_Texture *player_type_label;
-    } txt;
-};
 
 #define MAX_PLAYERS 10
 Player p[MAX_PLAYERS];
 int PLAYERS=3;
 
-#include "piece_characteristics.h"
-#include "mechanics.cpp"
-#include "ai.cpp"
-#include "graphics.cpp"
-#include "input.cpp"
-using namespace std;
+void init_game_state() {
+    // empty boards
+    for (int k=0; k<PLAYERS; k++)
+        clear_board(p[k]);
+
+    p[0].type = AI;
+    p[1].type = AI;
+    p[2].type = AI;
+
+    p[0].difficulty = 0;
+    p[1].difficulty = 0;
+    p[2].difficulty = 0;
+
+    // pick random piece and column
+    for (int k=0; k<PLAYERS; k++) {
+        random_piece(p[k].piece);
+        random_piece(p[k].next[0]);
+        random_piece(p[k].next[1]);
+        random_piece(p[k].next[2]);
+        init_crt_piece(p[k]);
+    }
+}
 
 int main (int argc, char* args[] ) {
 
@@ -120,7 +94,7 @@ int main (int argc, char* args[] ) {
         SDL_Event event;
         if (SDL_PollEvent(&event) && event.type == SDL_QUIT)
             break;
-        read_game_input();
+        read_game_input(p, PLAYERS);
 
         for (int k=0; k<PLAYERS; k++)
             next_frame(p[k]);
