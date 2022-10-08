@@ -4,31 +4,26 @@
 #include <SDL_image.h>
 #include <math.h>
 
-
+#include "common.h"
 #include "pieces.h"
 #include "mechanics.h"
-#include "ai.cpp"
-#include "graphics.cpp"
-#include "input.cpp"
+#include "ai.h"
+#include "graphics.h"
+#include "input.h"
 using namespace std;
 
-
-#define MAX_PLAYERS 10
 Player p[MAX_PLAYERS];
-int PLAYERS=3;
 
 void init_game_state() {
     // empty boards
     for (int k=0; k<PLAYERS; k++)
         clear_board(p[k]);
 
-    p[0].type = AI;
+    p[0].type = P1;
     p[1].type = AI;
-    p[2].type = AI;
 
     p[0].difficulty = 0;
     p[1].difficulty = 0;
-    p[2].difficulty = 0;
 
     // pick random piece and column
     for (int k=0; k<PLAYERS; k++) {
@@ -46,39 +41,19 @@ int main (int argc, char* args[] ) {
 
     init_graphics();
 
-    // titlescreen
-    draw_titlescreen();
-    bool in_title=true;
-    while (in_title) {
-        SDL_Event event;
-        if (SDL_PollEvent(&event)) {
-            if (event.type == SDL_KEYDOWN) {
-                switch(event.key.keysym.sym) {
-                    case SDLK_LEFT: selected_menu = (selected_menu + 2) % 3; break;
-                    case SDLK_RIGHT: selected_menu = (selected_menu + 1) % 3; break;
-                    case SDLK_UP: selected_menu = 50; break;
-                    case SDLK_DOWN: selected_menu = 0; break;
-                    case SDLK_RETURN: in_title = false; break;
-                }
-                draw_titlescreen();
-            }
-            if (event.type == SDL_QUIT) exit(0);
-        }
-        SDL_Delay(16);
+    
+    while(true){
+        title_input();
+        if (selection_input() == 1)
+            break;
     }
-
-    switch(selected_menu) {
-        case 0: PLAYERS = 1; break;
-        case 1: PLAYERS = 3; break;
-        case 2: exit(0);
-    }
+    
 
     init_game_state();
     for (int k=0; k<PLAYERS; k++)
         init_player_textures(p[k]);
-
-
-
+    
+    
     // main game loop
     while (true)
     {
@@ -94,6 +69,7 @@ int main (int argc, char* args[] ) {
         SDL_Event event;
         if (SDL_PollEvent(&event) && event.type == SDL_QUIT)
             break;
+        
         read_game_input(p, PLAYERS);
 
         for (int k=0; k<PLAYERS; k++)

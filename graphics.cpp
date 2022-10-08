@@ -1,6 +1,9 @@
-const int SCREEN_WIDTH=1160;
-const int SCREEN_HEIGHT=640;
-const int w = 20;
+#include "common.h"
+#include "mechanics.h"
+#include "pieces.h"
+#include <SDL.h>
+#include <SDL_ttf.h>
+#include <SDL_image.h>
 
 SDL_Window* window = NULL;
 SDL_Renderer* renderer = NULL;
@@ -8,6 +11,10 @@ SDL_Renderer* renderer = NULL;
 TTF_Font* Sans = NULL;
 TTF_Font* Small = NULL;
 TTF_Font* Bold = NULL;
+
+const int SCREEN_WIDTH=1160;
+const int SCREEN_HEIGHT=640;
+const int w = SCREEN_HEIGHT/32;
 
 int max(const int a, const int b) {
     return a<b? b : a;
@@ -254,8 +261,7 @@ void print_board (Player &p, int xoffset, int yoffset) {
     }
 }
 
-int selected_menu = 0;
-void draw_titlescreen() {
+void draw_titlescreen(int selected_menu) {
 
     SDL_SetRenderDrawColor(renderer, 0, 0, 0, SDL_ALPHA_OPAQUE);
     SDL_RenderClear(renderer);
@@ -271,10 +277,10 @@ void draw_titlescreen() {
     SDL_FreeSurface(image);
 
     // draw menu options
-    SDL_Rect rectang0 = {315, 470, 270, 50};
-    SDL_Rect rectang1 = {640, 470, 270, 50};
-    SDL_Rect rectang2 = {550, 550, 120, 50};
-    SDL_Rect rectang3 = {1080, 30, 50, 50};
+    SDL_Rect rectang0 = {460, 470, 120, 50};
+    SDL_Rect rectang1 = {640, 470, 120, 50};
+    SDL_Rect rectang2 = {460, 550, 120, 50};
+    SDL_Rect rectang3 = {640, 550, 120, 50};
 
     if (selected_menu == 0) {
         SDL_SetRenderDrawColor(renderer, 150, 150, 150, SDL_ALPHA_OPAQUE);
@@ -284,7 +290,7 @@ void draw_titlescreen() {
     }
     SDL_RenderFillRect(renderer, &rectang0);
     SDL_Texture *s = NULL;
-    create_text(s, "Singleplayer", Sans, 255, 255, 255);
+    create_text(s, "Solo", Sans, 255, 255, 255);
     render_text(rectang0.x + 4, rectang0.y + 4, s);
 
     if (selected_menu == 1) {
@@ -294,7 +300,7 @@ void draw_titlescreen() {
         SDL_SetRenderDrawColor(renderer, 100, 100, 100, SDL_ALPHA_OPAQUE);
     }
     SDL_RenderFillRect(renderer, &rectang1);
-    create_text(s, "Multiplayer", Sans, 255, 255, 255);
+    create_text(s, "Duos", Sans, 255, 255, 255);
     render_text(rectang1.x + 15, rectang1.y + 4, s);
 
     if (selected_menu == 2) {
@@ -304,18 +310,54 @@ void draw_titlescreen() {
         SDL_SetRenderDrawColor(renderer, 100, 100, 100, SDL_ALPHA_OPAQUE);
     }
     SDL_RenderFillRect(renderer, &rectang2);
-    create_text(s, "Quit", Sans, 255, 255, 255);
+    create_text(s, "Info", Sans, 255, 255, 255);
     render_text(rectang2.x + 15, rectang2.y + 4, s);
 
-    if (selected_menu == 50) {
+    if (selected_menu == 3) {
         SDL_SetRenderDrawColor(renderer, 150, 150, 150, SDL_ALPHA_OPAQUE);
     }
     else {
         SDL_SetRenderDrawColor(renderer, 100, 100, 100, SDL_ALPHA_OPAQUE);
     }
     SDL_RenderFillRect(renderer, &rectang3);
-    create_text(s, "ƒ", Sans, 255, 255, 255);
+    create_text(s, "Quit", Sans, 255, 255, 255);
     render_text(rectang3.x, rectang3.y + 4, s);
 
     SDL_RenderPresent(renderer);
+}
+
+void draw_selectionscreen(int col, int row){
+    SDL_SetRenderDrawColor(renderer, 0, 0, 0, SDL_ALPHA_OPAQUE);
+    SDL_RenderClear(renderer);
+    
+    for (int k=0; k<PLAYERS; k++){
+        int xoffset = 4 + 18*k;
+        int yoffset = 5;
+        SDL_SetRenderDrawColor (renderer, 255, 255, 255, SDL_ALPHA_OPAQUE);
+        const int weight = 4;
+        
+        // border vertical
+        draw_rectangle(xoffset*w-1-weight, yoffset*w-1, xoffset*w-1, (22+yoffset)*w);
+        draw_rectangle((xoffset+14)*w, yoffset*w-1, (xoffset+14)*w+1+weight, (22+yoffset)*w);
+        
+        // border horizontal
+        draw_rectangle(xoffset*w-1-weight, yoffset*w-1-weight, (xoffset+14)*w+1+weight, yoffset*w-1);
+        draw_rectangle(xoffset*w-1-weight, (yoffset+22)*w, (xoffset+14)*w+1+weight, (yoffset+22)*w+1+weight);
+
+        // draw menu options
+        SDL_Rect rectang0 = {460, 470, 120, 50};
+
+        if (row == 0) {
+            SDL_SetRenderDrawColor(renderer, 150, 0, 150, SDL_ALPHA_OPAQUE);
+        }
+        else {
+            SDL_SetRenderDrawColor(renderer, 100, 0, 100, SDL_ALPHA_OPAQUE);
+        }
+        SDL_RenderFillRect(renderer, &rectang0);
+        SDL_Texture *s = NULL;
+        create_text(s, "yes", Sans, 255, 255, 255);
+        render_text(rectang0.x + 4, rectang0.y + 4, s);
+
+        SDL_RenderPresent(renderer);
+    }
 }

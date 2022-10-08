@@ -15,21 +15,9 @@
 			);
 			dependencies = (
 				EC78A7D9A40B4942B5D1B96A /* PBXTargetDependency */,
-				084C30C016BB4F479D970957 /* PBXTargetDependency */,
 			);
 			name = ALL_BUILD;
 			productName = ALL_BUILD;
-		};
-		9D08B5D40C774CE1A19F868B /* ZERO_CHECK */ = {
-			isa = PBXAggregateTarget;
-			buildConfigurationList = 0729CE32A679410EA2BF8805 /* Build configuration list for PBXAggregateTarget "ZERO_CHECK" */;
-			buildPhases = (
-				E6F1416737F92D7BD46BB6CE /* Generate CMakeFiles/ZERO_CHECK */,
-			);
-			dependencies = (
-			);
-			name = ZERO_CHECK;
-			productName = ZERO_CHECK;
 		};
 /* End PBXAggregateTarget section */
 
@@ -39,29 +27,19 @@
 		C548A41A286A110D00470694 /* Andale.ttf in CopyFiles */ = {isa = PBXBuildFile; fileRef = C548A417286A10EC00470694 /* Andale.ttf */; };
 		C548A41E286A15A100470694 /* mechanics.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C548A41D286A156800470694 /* mechanics.cpp */; };
 		C548A422286A1B0500470694 /* piece_characteristics.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C548A421286A1AED00470694 /* piece_characteristics.cpp */; };
+		C548A42528914B7000470694 /* graphics.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C548A42428914B7000470694 /* graphics.cpp */; };
+		C548A4282891517700470694 /* ai.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C548A4272891516F00470694 /* ai.cpp */; };
+		C548A42A2891538E00470694 /* input.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C548A4292891537F00470694 /* input.cpp */; };
+		C548A42E2897C70000470694 /* common.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C548A42C2897C6FA00470694 /* common.cpp */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
-		0CA71AEC9B3F45DD9816AF97 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 3076F6ED451445DCABB19EEF /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = 9D08B5D40C774CE1A19F868B;
-			remoteInfo = ZERO_CHECK;
-		};
 		6FD32FBC8C5C41D2BA886AB1 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 3076F6ED451445DCABB19EEF /* Project object */;
 			proxyType = 1;
 			remoteGlobalIDString = 694FA986C3C4462C814210A2;
 			remoteInfo = tetris;
-		};
-		F796D1F2DC6749A6990723E0 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 3076F6ED451445DCABB19EEF /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = 9D08B5D40C774CE1A19F868B;
-			remoteInfo = ZERO_CHECK;
 		};
 /* End PBXContainerItemProxy section */
 
@@ -80,7 +58,6 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		5812F1441F7E43AD9B4EB4B2 /* CMakeLists.txt */ = {isa = PBXFileReference; explicitFileType = sourcecode.text; fileEncoding = 4; lastKnownFileType = text; path = CMakeLists.txt; sourceTree = SOURCE_ROOT; };
 		912A62F0A1E64679B34FE332 /* main.cpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.cpp; fileEncoding = 4; path = main.cpp; sourceTree = SOURCE_ROOT; };
 		C548A417286A10EC00470694 /* Andale.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = Andale.ttf; sourceTree = "<group>"; };
 		C548A418286A10FA00470694 /* cover.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = cover.jpg; sourceTree = "<group>"; };
@@ -89,8 +66,14 @@
 		C548A41F286A16C300470694 /* common.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = common.h; sourceTree = "<group>"; };
 		C548A420286A1A6300470694 /* pieces.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = pieces.h; sourceTree = "<group>"; };
 		C548A421286A1AED00470694 /* piece_characteristics.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = piece_characteristics.cpp; sourceTree = "<group>"; };
+		C548A4232891475800470694 /* graphics.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = graphics.h; sourceTree = "<group>"; };
+		C548A42428914B7000470694 /* graphics.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = graphics.cpp; sourceTree = "<group>"; };
+		C548A4262891514C00470694 /* ai.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ai.h; sourceTree = "<group>"; };
+		C548A4272891516F00470694 /* ai.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = ai.cpp; sourceTree = "<group>"; };
+		C548A4292891537F00470694 /* input.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = input.cpp; sourceTree = "<group>"; };
+		C548A42B289153A700470694 /* input.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = input.h; sourceTree = "<group>"; };
+		C548A42C2897C6FA00470694 /* common.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = common.cpp; sourceTree = "<group>"; };
 		D84C499FDBB14130A178B03C /* tetris */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; path = tetris; sourceTree = BUILT_PRODUCTS_DIR; };
-		DC0DEB45A96C4B6782E82A98 /* CMakeLists.txt */ = {isa = PBXFileReference; explicitFileType = sourcecode.text; fileEncoding = 4; lastKnownFileType = text; path = CMakeLists.txt; sourceTree = SOURCE_ROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -104,29 +87,12 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		0025DB90ED8C4005846DDE5C /* ALL_BUILD */ = {
-			isa = PBXGroup;
-			children = (
-				258749B21C874E98BE5FABFF /* CMake Rules */,
-				DC0DEB45A96C4B6782E82A98 /* CMakeLists.txt */,
-			);
-			name = ALL_BUILD;
-			sourceTree = "<group>";
-		};
-		258749B21C874E98BE5FABFF /* CMake Rules */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			name = "CMake Rules";
-			sourceTree = "<group>";
-		};
 		430498BC0DBC4D03925E66C6 /* tetris */ = {
 			isa = PBXGroup;
 			children = (
 				C548A41C286A150200470694 /* Headers */,
 				C548A416286A10D400470694 /* Resources */,
 				961ECE09B01A449ABD833338 /* Source Files */,
-				5812F1441F7E43AD9B4EB4B2 /* CMakeLists.txt */,
 			);
 			name = tetris;
 			sourceTree = "<group>";
@@ -150,7 +116,6 @@
 			isa = PBXGroup;
 			children = (
 				430498BC0DBC4D03925E66C6 /* tetris */,
-				0025DB90ED8C4005846DDE5C /* ALL_BUILD */,
 				499E62F5DF3346F095DCBFF2 /* Products */,
 				60A828E371584968AE2E788E /* Frameworks */,
 			);
@@ -159,8 +124,12 @@
 		961ECE09B01A449ABD833338 /* Source Files */ = {
 			isa = PBXGroup;
 			children = (
+				C548A4292891537F00470694 /* input.cpp */,
+				C548A42428914B7000470694 /* graphics.cpp */,
+				C548A42C2897C6FA00470694 /* common.cpp */,
 				C548A421286A1AED00470694 /* piece_characteristics.cpp */,
 				C548A41D286A156800470694 /* mechanics.cpp */,
+				C548A4272891516F00470694 /* ai.cpp */,
 				912A62F0A1E64679B34FE332 /* main.cpp */,
 			);
 			name = "Source Files";
@@ -178,9 +147,12 @@
 		C548A41C286A150200470694 /* Headers */ = {
 			isa = PBXGroup;
 			children = (
+				C548A4232891475800470694 /* graphics.h */,
 				C548A41F286A16C300470694 /* common.h */,
 				C548A41B286A136500470694 /* mechanics.h */,
 				C548A420286A1A6300470694 /* pieces.h */,
+				C548A42B289153A700470694 /* input.h */,
+				C548A4262891514C00470694 /* ai.h */,
 			);
 			name = Headers;
 			sourceTree = "<group>";
@@ -199,7 +171,6 @@
 			buildRules = (
 			);
 			dependencies = (
-				D235598048B942708C83D4B5 /* PBXTargetDependency */,
 			);
 			name = tetris;
 			productName = tetris;
@@ -227,7 +198,6 @@
 			projectRoot = "";
 			targets = (
 				7C46F11B78C54E88B9A75EB4 /* ALL_BUILD */,
-				9D08B5D40C774CE1A19F868B /* ZERO_CHECK */,
 				694FA986C3C4462C814210A2 /* tetris */,
 			);
 		};
@@ -251,23 +221,6 @@
 			shellScript = "set -e\nif test \"$CONFIGURATION\" = \"Debug\"; then :\n  cd /Users/mihneabuzoiu/Documents/GitHub/tetris\n  echo Build\\ all\\ projects\nfi\nif test \"$CONFIGURATION\" = \"Release\"; then :\n  cd /Users/mihneabuzoiu/Documents/GitHub/tetris\n  echo Build\\ all\\ projects\nfi\nif test \"$CONFIGURATION\" = \"MinSizeRel\"; then :\n  cd /Users/mihneabuzoiu/Documents/GitHub/tetris\n  echo Build\\ all\\ projects\nfi\nif test \"$CONFIGURATION\" = \"RelWithDebInfo\"; then :\n  cd /Users/mihneabuzoiu/Documents/GitHub/tetris\n  echo Build\\ all\\ projects\nfi\n";
 			showEnvVarsInLog = 0;
 		};
-		E6F1416737F92D7BD46BB6CE /* Generate CMakeFiles/ZERO_CHECK */ = {
-			isa = PBXShellScriptBuildPhase;
-			alwaysOutOfDate = 1;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "Generate CMakeFiles/ZERO_CHECK";
-			outputPaths = (
-				/Users/mihneabuzoiu/Documents/GitHub/tetris/CMakeFiles/ZERO_CHECK,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "set -e\nif test \"$CONFIGURATION\" = \"Debug\"; then :\n  cd /Users/mihneabuzoiu/Documents/GitHub/tetris\n  make -f /Users/mihneabuzoiu/Documents/GitHub/tetris/CMakeScripts/ReRunCMake.make\nfi\nif test \"$CONFIGURATION\" = \"Release\"; then :\n  cd /Users/mihneabuzoiu/Documents/GitHub/tetris\n  make -f /Users/mihneabuzoiu/Documents/GitHub/tetris/CMakeScripts/ReRunCMake.make\nfi\nif test \"$CONFIGURATION\" = \"MinSizeRel\"; then :\n  cd /Users/mihneabuzoiu/Documents/GitHub/tetris\n  make -f /Users/mihneabuzoiu/Documents/GitHub/tetris/CMakeScripts/ReRunCMake.make\nfi\nif test \"$CONFIGURATION\" = \"RelWithDebInfo\"; then :\n  cd /Users/mihneabuzoiu/Documents/GitHub/tetris\n  make -f /Users/mihneabuzoiu/Documents/GitHub/tetris/CMakeScripts/ReRunCMake.make\nfi\n";
-			showEnvVarsInLog = 0;
-		};
 /* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
@@ -275,6 +228,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C548A4282891517700470694 /* ai.cpp in Sources */,
+				C548A42E2897C70000470694 /* common.cpp in Sources */,
+				C548A42528914B7000470694 /* graphics.cpp in Sources */,
+				C548A42A2891538E00470694 /* input.cpp in Sources */,
 				C548A422286A1B0500470694 /* piece_characteristics.cpp in Sources */,
 				C548A41E286A15A100470694 /* mechanics.cpp in Sources */,
 				586593A4FD6D4AF081B0AC02 /* main.cpp in Sources */,
@@ -284,16 +241,6 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
-		084C30C016BB4F479D970957 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = 9D08B5D40C774CE1A19F868B /* ZERO_CHECK */;
-			targetProxy = F796D1F2DC6749A6990723E0 /* PBXContainerItemProxy */;
-		};
-		D235598048B942708C83D4B5 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = 9D08B5D40C774CE1A19F868B /* ZERO_CHECK */;
-			targetProxy = 0CA71AEC9B3F45DD9816AF97 /* PBXContainerItemProxy */;
-		};
 		EC78A7D9A40B4942B5D1B96A /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = 694FA986C3C4462C814210A2 /* tetris */;
@@ -383,29 +330,6 @@
 			};
 			name = MinSizeRel;
 		};
-		3C457A731820410D880537E6 /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				COMBINE_HIDPI_IMAGES = YES;
-				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
-				GCC_INLINES_ARE_PRIVATE_EXTERN = NO;
-				GCC_OPTIMIZATION_LEVEL = 0;
-				GCC_PREPROCESSOR_DEFINITIONS = (
-					"'CMAKE_INTDIR=\"$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)\"'",
-					"$(inherited)",
-				);
-				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
-				INSTALL_PATH = "";
-				OTHER_LDFLAGS = " $(inherited)";
-				OTHER_REZFLAGS = "";
-				PRODUCT_NAME = ZERO_CHECK;
-				SECTORDER_FLAGS = "";
-				SYMROOT = /Users/mihneabuzoiu/Documents/GitHub/tetris;
-				USE_HEADERMAP = NO;
-				WARNING_CFLAGS = "$(inherited)";
-			};
-			name = Debug;
-		};
 		40C4A2CBB1F44DD5BC5DC629 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -436,29 +360,6 @@
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX12.3.sdk;
 				SYMROOT = /Users/mihneabuzoiu/Documents/GitHub/tetris/build;
-			};
-			name = RelWithDebInfo;
-		};
-		8EF9030A9F3F4390985C0855 /* RelWithDebInfo */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				COMBINE_HIDPI_IMAGES = YES;
-				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
-				GCC_INLINES_ARE_PRIVATE_EXTERN = NO;
-				GCC_OPTIMIZATION_LEVEL = 0;
-				GCC_PREPROCESSOR_DEFINITIONS = (
-					"'CMAKE_INTDIR=\"$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)\"'",
-					"$(inherited)",
-				);
-				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
-				INSTALL_PATH = "";
-				OTHER_LDFLAGS = " $(inherited)";
-				OTHER_REZFLAGS = "";
-				PRODUCT_NAME = ZERO_CHECK;
-				SECTORDER_FLAGS = "";
-				SYMROOT = /Users/mihneabuzoiu/Documents/GitHub/tetris;
-				USE_HEADERMAP = NO;
-				WARNING_CFLAGS = "$(inherited)";
 			};
 			name = RelWithDebInfo;
 		};
@@ -721,66 +622,9 @@
 			};
 			name = MinSizeRel;
 		};
-		DF18389794F740ECAAF238FF /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				COMBINE_HIDPI_IMAGES = YES;
-				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
-				GCC_INLINES_ARE_PRIVATE_EXTERN = NO;
-				GCC_OPTIMIZATION_LEVEL = 0;
-				GCC_PREPROCESSOR_DEFINITIONS = (
-					"'CMAKE_INTDIR=\"$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)\"'",
-					"$(inherited)",
-				);
-				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
-				INSTALL_PATH = "";
-				OTHER_LDFLAGS = " $(inherited)";
-				OTHER_REZFLAGS = "";
-				PRODUCT_NAME = ZERO_CHECK;
-				SECTORDER_FLAGS = "";
-				SYMROOT = /Users/mihneabuzoiu/Documents/GitHub/tetris;
-				USE_HEADERMAP = NO;
-				WARNING_CFLAGS = "$(inherited)";
-			};
-			name = Release;
-		};
-		F32F9B114DCF457E8172D29A /* MinSizeRel */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				COMBINE_HIDPI_IMAGES = YES;
-				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
-				GCC_INLINES_ARE_PRIVATE_EXTERN = NO;
-				GCC_OPTIMIZATION_LEVEL = 0;
-				GCC_PREPROCESSOR_DEFINITIONS = (
-					"'CMAKE_INTDIR=\"$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)\"'",
-					"$(inherited)",
-				);
-				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
-				INSTALL_PATH = "";
-				OTHER_LDFLAGS = " $(inherited)";
-				OTHER_REZFLAGS = "";
-				PRODUCT_NAME = ZERO_CHECK;
-				SECTORDER_FLAGS = "";
-				SYMROOT = /Users/mihneabuzoiu/Documents/GitHub/tetris;
-				USE_HEADERMAP = NO;
-				WARNING_CFLAGS = "$(inherited)";
-			};
-			name = MinSizeRel;
-		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		0729CE32A679410EA2BF8805 /* Build configuration list for PBXAggregateTarget "ZERO_CHECK" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				3C457A731820410D880537E6 /* Debug */,
-				DF18389794F740ECAAF238FF /* Release */,
-				F32F9B114DCF457E8172D29A /* MinSizeRel */,
-				8EF9030A9F3F4390985C0855 /* RelWithDebInfo */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Debug;
-		};
 		50D952BB08A542198B9A08E4 /* Build configuration list for PBXAggregateTarget "ALL_BUILD" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (

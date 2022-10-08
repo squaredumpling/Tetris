@@ -15,6 +15,9 @@ typedef int Board[20][10];
 
 enum PlayerType {P1, P2, AI};
 
+#define MAX_PLAYERS 10
+extern int PLAYERS;
+
 struct Player
 {
     // player info

@@ -1,6 +1,10 @@
+#include <math.h>
+#include "common.h"
+#include "mechanics.h"
+
 int evaluate_board (Board b)
 {
-    int y=0, ymin=20, ymax=0, g=0, delta=0, yy=0, depth=0;
+    int y=0, ymin=20, ymax=0, hole=0, delta=0, yy=0, depth=0;
     for (int i=0; i<10; i++)
     {
         for (int j=0; j<20 && b[j][i]==0; j++)
@@ -8,7 +12,7 @@ int evaluate_board (Board b)
 
         for (int j=y; j<20; j++) {
             if (b[j][i]==0) {
-                g++;
+                hole++;
                 depth += j-y;
             }
         }
@@ -24,7 +28,7 @@ int evaluate_board (Board b)
 
         yy=y;
     }
-    return g*g + delta + (ymax-ymin)*(ymax-ymin) + depth;
+    return hole*hole + delta + (ymax-ymin)*(ymax-ymin) + depth;
 }
 
 void compute_next_piece (Player &p)
